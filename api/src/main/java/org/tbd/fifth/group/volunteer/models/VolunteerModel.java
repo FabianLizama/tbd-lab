@@ -1,23 +1,30 @@
 package org.tbd.fifth.group.volunteer.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class VolunteerModel {
     private int volunteer_id;
     private boolean disponibility;
-
     private String name;
 
-    public VolunteerModel(int id_volunteer, boolean disponibility, String name) {
-        this.volunteer_id = id_volunteer;
+    // Constructor por defecto
+    public VolunteerModel() {
+    }
+
+    // Constructor con parámetros
+    public VolunteerModel(int volunteer_id, boolean disponibility, String name) {
+        this.volunteer_id = volunteer_id;
         this.disponibility = disponibility;
         this.name = name;
     }
 
-    public int getId_volunteer() {
-        return volunteer_id;
-    }
-
     public void setId_volunteer(int id_volunteer) {
         this.volunteer_id = id_volunteer;
+    }
+
+    public int getVolunteer_id() {
+        return volunteer_id;
     }
 
     public boolean isDisponibility() {
