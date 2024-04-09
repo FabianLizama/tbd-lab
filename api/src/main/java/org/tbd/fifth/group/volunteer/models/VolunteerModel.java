@@ -19,12 +19,12 @@ public class VolunteerModel {
         this.name = name;
     }
 
-    public void setId_volunteer(int id_volunteer) {
-        this.volunteer_id = id_volunteer;
-    }
-
     public int getVolunteer_id() {
         return volunteer_id;
+    }
+
+    public void setVolunteer_id(int volunteer_id) {
+        this.volunteer_id = volunteer_id;
     }
 
     public boolean isDisponibility() {

@@ -23,4 +23,10 @@ public class VolunteerController {
     public VolunteerModel createVolunteer(@RequestBody VolunteerModel volunteer) {
         return volunteerService.createVolunteer(volunteer);
     }
+
+    @GetMapping("/volunteer/{volunteer_id}")
+    @ResponseBody
+    public VolunteerModel getVolunteer(@PathVariable int volunteer_id) {
+        return volunteerService.getVolunteer(volunteer_id);
+    }
 }

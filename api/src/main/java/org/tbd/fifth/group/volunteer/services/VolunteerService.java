@@ -28,4 +28,16 @@ public class VolunteerService implements VolunteerRepository {
             return null;
         }
     }
+
+    @Override
+    public VolunteerModel getVolunteer(int volunteer_id){
+        try(Connection connection = sql2o.open()){
+            return connection.createQuery("SELECT * FROM \"volunteer\" WHERE volunteer_id = :volunteer_id")
+                    .addParameter("volunteer_id", volunteer_id)
+                    .executeAndFetchFirst(VolunteerModel.class);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

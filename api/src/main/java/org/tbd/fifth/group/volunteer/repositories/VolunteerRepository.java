@@ -8,4 +8,6 @@ import java.util.List;
 public interface VolunteerRepository {
     public VolunteerModel createVolunteer(VolunteerModel volunteer);
 
+    public VolunteerModel getVolunteer(int volunteer_id);
+
 }
