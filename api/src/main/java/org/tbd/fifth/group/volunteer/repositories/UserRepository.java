@@ -13,5 +13,7 @@ public interface UserRepository {
 
     public UserModel updateUser(UserModel user);
 
-    public UserModel loginUser(UserModel user);
+    public UserModel getUserByEmail(String email);
+
+    public String loginUser(String email, String password);
 }

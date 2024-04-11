@@ -29,6 +29,11 @@ public class DatabaseContext {
     public Sql2o sql2o(){
         return new Sql2o(dbUrl, dbUser, dbPass);
     }
+
+    @Bean
+    public SecretKey secretKey() {
+        return Jwts.SIG.HS256.key().build();
+    }
     
 
 

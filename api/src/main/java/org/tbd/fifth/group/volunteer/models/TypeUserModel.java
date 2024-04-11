@@ -3,7 +3,7 @@ package org.tbd.fifth.group.volunteer.models;
 public class TypeUserModel {
     private int type_user_id;
 
-    private String type_user_name;
+    private String name;
 
     private boolean CRUD_emergencies;
 
@@ -11,18 +11,16 @@ public class TypeUserModel {
 
     private boolean CRUD_tasks_states;
 
-    private boolean asign_volunteers;
+    private boolean assign_volunteers;
 
-    private TypeUserModel() {
-    }
 
-    public TypeUserModel(int type_user_id, String type_user_name, boolean CRUD_emergencies, boolean CRUD_tasks, boolean CRUD_tasks_states, boolean asign_volunteers) {
+    public TypeUserModel(int type_user_id, String name, boolean CRUD_emergencies, boolean CRUD_tasks, boolean CRUD_tasks_states, boolean assign_volunteers) {
         this.type_user_id = type_user_id;
-        this.type_user_name = type_user_name;
+        this.name = name;
         this.CRUD_emergencies = CRUD_emergencies;
         this.CRUD_tasks = CRUD_tasks;
         this.CRUD_tasks_states = CRUD_tasks_states;
-        this.asign_volunteers = asign_volunteers;
+        this.assign_volunteers = assign_volunteers;
     }
 
     public int getType_user_id() {
@@ -34,11 +32,11 @@ public class TypeUserModel {
     }
 
     public String getType_user_name() {
-        return type_user_name;
+        return name;
     }
 
     public void setType_user_name(String type_user_name) {
-        this.type_user_name = type_user_name;
+        this.name = type_user_name;
     }
 
     public boolean isCRUD_emergencies() {
@@ -66,10 +64,10 @@ public class TypeUserModel {
     }
 
     public boolean isAsign_volunteers() {
-        return asign_volunteers;
+        return assign_volunteers;
     }
 
     public void setAsign_volunteers(boolean asign_volunteers) {
-        this.asign_volunteers = asign_volunteers;
+        this.assign_volunteers = asign_volunteers;
     }
 }

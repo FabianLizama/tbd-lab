@@ -20,8 +20,8 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public UserModel loginUser(@RequestBody UserModel user) {
-        return userServices.loginUser(user);
+    public String loginUser(@RequestBody UserModel user) {
+        return userServices.loginUser(user.getEmail(), user.getPassword());
     }
 
     @GetMapping("/user/{user_id}")
