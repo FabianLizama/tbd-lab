@@ -39,36 +39,38 @@ async function handleSubmit (event) {
 </script>
 
 <template>
-    <div>
-        <h1>Register</h1>
-        <UForm :schema="schema" :state="state" class="space-y-4" @submit="handleSubmit">
-            <h6>Voluntario o Coordinador</h6>
-            <UFormGroup label="Voluntario?" name="userType">
-                <UInput v-model="state.userType" />
-            </UFormGroup>
-            <UFormGroup label="Name" name="name">
-                <UInput v-model="state.name" />
-            </UFormGroup>
+    <div class="flex justify-center items-center h-screen">
+        <UCard class="w-3/5">
+            <h1 class="text-primary text-center text-inherit text-3xl py-5">Registro de Usuario</h1>
+            <UForm :schema="schema" :state="state" class="space-y-4" @submit="handleSubmit">
+                <h6>Voluntario o Coordinador</h6>
+                <UFormGroup label="Voluntario?" name="userType">
+                    <UInput v-model="state.userType" />
+                </UFormGroup>
+                <UFormGroup label="Name" name="name">
+                    <UInput v-model="state.name" />
+                </UFormGroup>
 
-            <UFormGroup label="Email" name="email">
-                <UInput v-model="state.email" />
-            </UFormGroup>
-            
-            <UFormGroup label="Password" name="password">
-                <UInput v-model="state.password" type="password" />
-            </UFormGroup>
-            
-            <UFormGroup label="Confirm Password" name="confirmPassword">
-                <UInput v-model="state.confirmPassword" type="password" />
-            </UFormGroup>
-            
-            <UFormGroup label="Phone" name="phone">
-                <UInput v-model="state.phone" />
-            </UFormGroup>
+                <UFormGroup label="Email" name="email">
+                    <UInput v-model="state.email" />
+                </UFormGroup>
+                
+                <UFormGroup label="Password" name="password">
+                    <UInput v-model="state.password" type="password" />
+                </UFormGroup>
+                
+                <UFormGroup label="Confirm Password" name="confirmPassword">
+                    <UInput v-model="state.confirmPassword" type="password" />
+                </UFormGroup>
+                
+                <UFormGroup label="Phone" name="phone">
+                    <UInput v-model="state.phone" />
+                </UFormGroup>
 
-            <UButton type="submit">
-                Submit
-            </UButton>
-        </UForm>
+                <UButton type="submit">
+                    Submit
+                </UButton>
+            </UForm>
+        </UCard>
     </div>
 </template>
