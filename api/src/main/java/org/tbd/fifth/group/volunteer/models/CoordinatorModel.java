@@ -3,12 +3,12 @@ package org.tbd.fifth.group.volunteer.models;
 public class CoordinatorModel {
     private int coordinator_id;
     private int institution_id;
-    private String name;
+    private int user_id;
 
-    public CoordinatorModel(int coordinator_id, int institution_id, String name) {
+    public CoordinatorModel(int coordinator_id, int institution_id, int user_id) {
         this.coordinator_id = coordinator_id;
         this.institution_id = institution_id;
-        this.name = name;
+        this.user_id = user_id;
     }
 
     public int getCoordinator_id() {
@@ -27,11 +27,11 @@ public class CoordinatorModel {
         this.institution_id = institution_id;
     }
 
-    public String getName() {
-        return name;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 }

@@ -13,15 +13,15 @@ public class VolunteerService implements VolunteerRepository {
     private Sql2o sql2o;
 
     @Override
-    // volunteer_id, disponibility, name
+    // volunteer_id, disponibility, user_id
     public VolunteerModel createVolunteer(VolunteerModel volunteer){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"volunteer\" (volunteer_id, disponibility, name) VALUES (:volunteer_id, :disponibility, :name)")
+            connection.createQuery("INSERT INTO \"volunteer\" (volunteer_id, disponibility, user_id)"+
+                    " VALUES (:volunteer_id, :disponibility, :user_id)")
                     .addParameter("volunteer_id", volunteer.getVolunteer_id())
                     .addParameter("disponibility", volunteer.isDisponibility())
-                    .addParameter("name", volunteer.getName())
+                    .addParameter("user_id", volunteer.getUser_id())
                     .executeUpdate();
-
             return volunteer;
         }catch(Exception e){
             System.out.println(e.getMessage());

@@ -14,21 +14,20 @@ public class CoordinatorService implements CoordinatorRepository {
     private Sql2o sql2o;
 
     @Override
-    // coordinator_id, institution, name
+    // coordinator_id, institution_id, user_id
     public CoordinatorModel createCoordinator(CoordinatorModel coordinator){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"coordinator\" (coordinator_id, institution, name) VALUES (:coordinator_id, :institution, :name)")
-                    .addParameter("coordinator_id", coordinator.getCoordinator_id())
-                    .addParameter("institution", coordinator.getInstitution_id())
-                    .addParameter("name", coordinator.getName())
-                    .executeUpdate();
-
+            connection.createQuery("INSERT INTO \"coordinator\" (institution_id, user_id) VALUES (:institution_id, :user_id)", true)
+                    .addParameter("institution_id", coordinator.getInstitution_id())
+                    .addParameter("user_id", coordinator.getUser_id())
+                    .executeUpdate().getKey();
             return coordinator;
         }catch(Exception e){
             System.out.println(e.getMessage());
             return null;
         }
     }
+
 
     @Override
     public CoordinatorModel getCoordinator(int coordinator_id){

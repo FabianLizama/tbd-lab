@@ -6,17 +6,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class VolunteerModel {
     private int volunteer_id;
     private boolean disponibility;
-    private String name;
+
+    private int user_id;
 
     // Constructor por defecto
     public VolunteerModel() {
     }
 
     // Constructor con parámetros
-    public VolunteerModel(int volunteer_id, boolean disponibility, String name) {
+    public VolunteerModel(int volunteer_id, boolean disponibility, int user_id) {
         this.volunteer_id = volunteer_id;
         this.disponibility = disponibility;
-        this.name = name;
+        this.user_id = user_id;
     }
 
     public int getVolunteer_id() {
@@ -35,11 +36,11 @@ public class VolunteerModel {
         this.disponibility = disponibility;
     }
 
-    public String getName() {
-        return name;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 }
