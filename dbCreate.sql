@@ -30,7 +30,7 @@ CREATE TABLE Institution (
 
 -- Tablas con relaciones directas
 CREATE TABLE UserM (
-    User_id INT NOT NULL,
+    User_id SERIAL,
     type_user_id INT NOT NULL,
     name CHAR(50) NOT NULL,
     password CHAR(50) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE UserM (
 );
 
 CREATE TABLE Emergency (
-    emergency_id INT NOT NULL,
+    emergency_id SERIAL,
     institution_id INT NOT NULL,
     name CHAR(100) NOT NULL,
     PRIMARY KEY (emergency_id),
@@ -49,7 +49,7 @@ CREATE TABLE Emergency (
 );
 
 CREATE TABLE Volunteer (
-    volunteer_id INT NOT NULL,
+    volunteer_id SERIAL,
     user_id INT NOT NULL,
     disponibility BOOLEAN NOT NULL,
     PRIMARY KEY (volunteer_id),
@@ -76,7 +76,7 @@ CREATE TABLE Vol_skill (
 );
 
 CREATE TABLE Coordinator (
-    coordinator_id INT NOT NULL,
+    coordinator_id SERIAL,
     institution_id INT NOT NULL,
     user_id INT NOT NULL,
     PRIMARY KEY (coordinator_id),
