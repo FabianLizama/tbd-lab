@@ -30,20 +30,21 @@ public class EmergencyService implements EmergencyRepository {
 
      */
 
-
-    public EmergencyModel createEmergency(EmergencyModel emergency){
-        try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"emergency\" (institution_id, coordinator_id, name, emergency_state) VALUES (:institution_id, :coordinator_id, :name, :emergency_state)", true)
-                    .addParameter("institution_id", emergency.getInstitution_id())
-                    .addParameter("coordinator_id", emergency.getCoordinator_id())
-                    .addParameter("name", emergency.getName())
-                    .addParameter("emergency_state", emergency.getEmergency_state())
-                    .executeUpdate().getKey();
-            return emergency;
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-            return null;
+    public EmergencyModel createEmergency(EmergencyModel emergency, String token){
+        if(JWT.validateToken(token)){
+            try(Connection connection = sql2o.open()){
+                connection.createQuery("INSERT INTO \"emergency\" (institution_id, coordinator_id, name, emergency_state) VALUES (:institution_id, :coordinator_id, :name, :emergency_state)")
+                        .addParameter("institution_id", emergency.getInstitution_id())
+                        .addParameter("coordinator_id", emergency.getCoordinator_id())
+                        .addParameter("name", emergency.getName())
+                        .addParameter("emergency_state", emergency.getEmergency_state())
+                        .executeUpdate();
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+                return null;
+            }
         }
+        return null;
     }
 
     @Override
@@ -63,6 +64,22 @@ public class EmergencyService implements EmergencyRepository {
         if (JWT.validateToken(token)) {
             try (Connection connection = sql2o.open()) {
                 return connection.createQuery("SELECT * FROM \"emergency\"")
+                        .executeAndFetch(EmergencyModel.class);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return null;
+            }
+        } else {
+            return null;
+        }
+
+    }
+
+    @Override
+    public List<EmergencyModel> getEmergenciesActives(String token) {
+        if (JWT.validateToken(token)) {
+            try (Connection connection = sql2o.open()) {
+                return connection.createQuery("SELECT * FROM \"emergency\" WHERE emergency_state = 'active'")
                         .executeAndFetch(EmergencyModel.class);
             } catch (Exception e) {
                 System.out.println(e.getMessage());

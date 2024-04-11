@@ -35,4 +35,14 @@ public class UserController {
         return userServices.DeleteUser(user_id);
     }
 
+    @PutMapping("/user")
+    public UserModel updateUser(@RequestBody UserModel user) {
+        return userServices.updateUser(user);
+    }
+
+    @GetMapping("/user/email/{email}")
+    public UserModel getUserByEmail(@PathVariable String email) {
+        return userServices.getUserByEmail(email);
+    }
+
 }

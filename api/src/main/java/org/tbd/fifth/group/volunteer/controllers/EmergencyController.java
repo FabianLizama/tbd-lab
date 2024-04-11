@@ -17,10 +17,10 @@ public class EmergencyController {
         this.emergencyService = emergencyService;
     }
 
-    @PostMapping("/emergency")
+    @PostMapping("/emergency/create")
     @ResponseBody
-    public EmergencyModel createEmergency(@RequestBody EmergencyModel emergency) {
-        return emergencyService.createEmergency(emergency);
+    public EmergencyModel createEmergency(@RequestBody EmergencyModel emergency, @RequestParam String token) {
+        return emergencyService.createEmergency(emergency,token);
     }
 
     @GetMapping("/emergency/{emergency_id}")
@@ -33,5 +33,11 @@ public class EmergencyController {
     @ResponseBody
     public List<EmergencyModel> getAllEmergencies(@RequestParam String token) {
         return emergencyService.getAllEmergencies(token);
+    }
+
+    @GetMapping("/emergency/actives")
+    @ResponseBody
+    public List<EmergencyModel> getEmergenciesActives(@RequestParam String token) {
+        return emergencyService.getEmergenciesActives(token);
     }
 }

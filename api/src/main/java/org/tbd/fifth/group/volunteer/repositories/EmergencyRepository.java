@@ -6,11 +6,13 @@ import java.util.List;
 
 public interface EmergencyRepository {
 
-    public EmergencyModel createEmergency(EmergencyModel emergency);
+    public EmergencyModel createEmergency(EmergencyModel emergency, String token);
 
     public EmergencyModel getEmergency(int emergency_id);
 
     public List<EmergencyModel> getAllEmergencies(String token);
+
+    public List<EmergencyModel> getEmergenciesActives(String token);
 
 
 }

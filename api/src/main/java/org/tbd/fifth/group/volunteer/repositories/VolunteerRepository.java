@@ -10,4 +10,10 @@ public interface VolunteerRepository {
 
     public VolunteerModel getVolunteer(int volunteer_id);
 
+    public List<VolunteerModel> listVolunteers();
+
+    public VolunteerModel updateVolunteer(VolunteerModel volunteer);
+
+    public VolunteerModel deleteVolunteer(int volunteer_id);
+
 }

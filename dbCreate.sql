@@ -91,6 +91,12 @@ CREATE TABLE Eme_skill (
     FOREIGN KEY (skill_id) REFERENCES Skill (skill_id)
 );
 
+CREATE TABLE Task_skill (
+    task_skill_id SERIAL,
+    eme_skill_id INT NOT NULL,
+    PRIMARY KEY (task_skill_id),
+    FOREIGN KEY (eme_skill_id) REFERENCES Eme_skill (eme_skill_id)
+);
 
 CREATE TABLE Task (
     task_id SERIAL,
@@ -101,14 +107,7 @@ CREATE TABLE Task (
     PRIMARY KEY (task_id),
     FOREIGN KEY (emergency_id) REFERENCES Emergency (emergency_id),
     FOREIGN KEY (task_state_id) REFERENCES Task_state (task_state_id),
-    FOREIGN KEY (task_skill_id) REFERENCES Eme_skill (eme_skill_id)
-);
-
-CREATE TABLE Task_skill (
-    task_skill_id SERIAL,
-    eme_skill_id INT NOT NULL,
-    PRIMARY KEY (task_skill_id),
-    FOREIGN KEY (eme_skill_id) REFERENCES Eme_skill (eme_skill_id)
+    FOREIGN KEY (task_skill_id) REFERENCES Task_skill (task_skill_id)
 );
 
 CREATE TABLE Ranking (
