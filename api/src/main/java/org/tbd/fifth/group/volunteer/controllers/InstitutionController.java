@@ -6,6 +6,7 @@ import org.tbd.fifth.group.volunteer.models.InstitutionModel;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/api")
 public class InstitutionController {
 
     private final InstitutionService institutionService;

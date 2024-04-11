@@ -6,6 +6,7 @@ import org.tbd.fifth.group.volunteer.services.TaskStateService;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/api")
 public class TaskStateController {
 
     private final TaskStateService taskStateService;

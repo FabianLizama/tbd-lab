@@ -8,6 +8,7 @@ import org.tbd.fifth.group.volunteer.services.TaskLogService;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/api")
 public class TaskLogController {
 
     public final TaskLogService taskLogService;

@@ -49,8 +49,8 @@ public class EmergencyService implements EmergencyRepository {
     }
 
     @Override
-    public List<EmergencyModel> getAllEmergencies(String token){
-        if(JWT.validateToken(token)) {
+    public List<EmergencyModel> getAllEmergencies(String token) {
+        if (JWT.validateToken(token)) {
             try (Connection connection = sql2o.open()) {
                 return connection.createQuery("SELECT * FROM \"emergency\"")
                         .executeAndFetch(EmergencyModel.class);
@@ -58,7 +58,7 @@ public class EmergencyService implements EmergencyRepository {
                 System.out.println(e.getMessage());
                 return null;
             }
-        }else {
+        } else {
             return null;
         }
 

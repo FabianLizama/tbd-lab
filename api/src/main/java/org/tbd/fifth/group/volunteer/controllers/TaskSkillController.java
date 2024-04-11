@@ -6,6 +6,7 @@ import org.tbd.fifth.group.volunteer.repositories.TaskSkillRepository;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/api")
 public class TaskSkillController {
 
     private final TaskSkillRepository taskSkillRepository;

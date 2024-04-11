@@ -6,6 +6,7 @@ import org.tbd.fifth.group.volunteer.services.UserServices;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
     private final UserServices userServices;
@@ -14,7 +15,7 @@ public class UserController {
         this.userServices = userServices;
     }
 
-    @PostMapping("/user")
+    @PostMapping("/user/register")
     public UserModel createUser(@RequestBody UserModel user) {
         return userServices.createUser(user);
     }

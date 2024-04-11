@@ -6,6 +6,7 @@ import org.tbd.fifth.group.volunteer.models.EmeSkillModel;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/api")
 public class EmeSkillController {
 
     public final EmeSkillService emeSkillService;

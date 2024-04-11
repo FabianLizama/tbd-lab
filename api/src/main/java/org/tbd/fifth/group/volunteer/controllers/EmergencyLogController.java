@@ -6,6 +6,7 @@ import org.tbd.fifth.group.volunteer.services.EmergencyLogService;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/api")
 public class EmergencyLogController {
 
     private final EmergencyLogService emergencyLogService;

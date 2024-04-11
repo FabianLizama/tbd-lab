@@ -6,6 +6,7 @@ import org.tbd.fifth.group.volunteer.services.RankingService;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/api")
 public class RankingController {
 
     public final RankingService rankingService;

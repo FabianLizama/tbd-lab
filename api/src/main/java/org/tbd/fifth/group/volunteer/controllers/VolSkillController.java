@@ -6,6 +6,7 @@ import org.tbd.fifth.group.volunteer.services.VolSkillServices;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/api")
 public class VolSkillController {
 
     private final VolSkillServices volSkillServices;

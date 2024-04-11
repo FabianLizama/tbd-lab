@@ -6,6 +6,7 @@ import org.tbd.fifth.group.volunteer.services.TaskService;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/api")
 public class TaskController {
 
     private final TaskService taskService;

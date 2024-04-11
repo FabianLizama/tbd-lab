@@ -6,6 +6,7 @@ import org.tbd.fifth.group.volunteer.services.CoordinatorService;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/api")
 public class CoordinatorController {
 
     private final CoordinatorService coordinatorService;
