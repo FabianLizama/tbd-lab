@@ -1,5 +1,15 @@
 <script setup>
 import { z } from 'zod';
+const colorMode = useColorMode();
+
+const isDark = computed({
+  get () {
+    return colorMode.value === 'dark'
+  },
+  set () {
+    colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+  }
+})
 
 const config = useRuntimeConfig();
 
@@ -41,7 +51,23 @@ async function handleSubmit (event) {
 <template>
     <div class="flex justify-center items-center h-screen">
         <UCard class="w-3/5">
-            <h1 class="text-primary text-center text-inherit text-3xl py-5">Registro de Usuario</h1>
+            <div>
+                <div class="text-end">
+                    <ClientOnly>
+                        <UButton
+                        :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
+                        color="gray"
+                        variant="ghost"
+                        aria-label="Theme"
+                        @click="isDark = !isDark"
+                        />
+                        <template #fallback>
+                            <div class="w-8 h-8" />
+                        </template>
+                    </ClientOnly>
+                </div>
+                    <h1 class="text-primary text-center text-inherit text-3xl pb-5 pt-2">Registro de Usuario</h1>
+            </div>
             <UForm :schema="schema" :state="state" class="space-y-4" @submit="handleSubmit">
                 <h6>Voluntario o Coordinador</h6>
                 <UFormGroup label="Voluntario?" name="userType">
@@ -72,5 +98,6 @@ async function handleSubmit (event) {
                 </UButton>
             </UForm>
         </UCard>
+        
     </div>
 </template>
