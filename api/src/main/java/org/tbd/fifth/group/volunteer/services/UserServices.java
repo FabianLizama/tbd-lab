@@ -17,7 +17,7 @@ public class UserServices implements UserRepository {
     private JwtMiddlewareServices jwtMiddlewareServices;
 
     @Override
-    public UserModel createUser(UserModel user){
+    public String createUser(UserModel user){
         try(Connection connection = sql2o.open()){
             Integer userId = (Integer) connection.createQuery("INSERT INTO \"userm\" (type_user_id, name, password, email, phone) VALUES (:type_user_id, :name, :password, :email, :phone)", true)
                     .addParameter("type_user_id", user.getType_user_id())
@@ -30,7 +30,7 @@ public class UserServices implements UserRepository {
             user.setUser_id(userId); // Asegúrate de establecer el ID del usuario
             String token = jwtMiddlewareServices.generateToken(user); // Generar token
 
-            return user;
+            return token;
         }catch(Exception e){
             System.out.println(e.getMessage());
             return null;

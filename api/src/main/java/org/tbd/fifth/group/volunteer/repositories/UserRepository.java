@@ -5,7 +5,7 @@ import org.tbd.fifth.group.volunteer.models.UserModel;
 
 public interface UserRepository {
 
-    public UserModel createUser(UserModel user);
+    public String createUser(UserModel user);
 
     public UserModel getUser(int user_id);
 
