@@ -16,9 +16,8 @@ public class VolunteerService implements VolunteerRepository {
     // volunteer_id, disponibility, user_id
     public VolunteerModel createVolunteer(VolunteerModel volunteer){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"volunteer\" (volunteer_id, disponibility, user_id)"+
-                    " VALUES (:volunteer_id, :disponibility, :user_id)")
-                    .addParameter("volunteer_id", volunteer.getVolunteer_id())
+            connection.createQuery("INSERT INTO \"volunteer\" ( disponibility, user_id)"+
+                    " VALUES (:disponibility, :user_id)")
                     .addParameter("disponibility", volunteer.isDisponibility())
                     .addParameter("user_id", volunteer.getUser_id())
                     .executeUpdate();

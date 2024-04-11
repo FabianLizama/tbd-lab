@@ -19,8 +19,7 @@ public class VolSkillServices implements VolSkillRepository {
 
     public VolSkillModel createVolSkill(VolSkillModel volSkill){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"vol_skill\" (vol_skill_id, volunteer_id, skill_id) VALUES (:vol_skill_id, :volunteer_id, :skill_id)")
-                    .addParameter("vol_skill_id", volSkill.getVol_skill_id())
+            connection.createQuery("INSERT INTO \"vol_skill\" (volunteer_id, skill_id) VALUES ( :volunteer_id, :skill_id)")
                     .addParameter("volunteer_id", volSkill.getVolunteer_id())
                     .addParameter("skill_id", volSkill.getSkill_id())
                     .executeUpdate();

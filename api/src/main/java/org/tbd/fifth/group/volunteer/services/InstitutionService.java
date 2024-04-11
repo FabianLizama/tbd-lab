@@ -16,8 +16,7 @@ public class InstitutionService implements InstitutionRepository{
     @Override
     public InstitutionModel createInstitution(InstitutionModel institution){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"institution\" (institution_id, institution_name) VALUES (:institution_id, :institution_name)")
-                    .addParameter("institution_id", institution.getInstitution_id())
+            connection.createQuery("INSERT INTO \"institution\" ( institution_name) VALUES ( :institution_name)")
                     .addParameter("institution_name", institution.getInstitution_name())
                     .executeUpdate();
 

@@ -16,8 +16,7 @@ public class TaskSkillService implements TaskSkillRepository {
     @Override
     public TaskSkillModel createTaskSkill(TaskSkillModel taskSkill){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"task_skill\" (task_skill_id, eme_skill_id) VALUES (:task_skill_id, :eme_skill_id)")
-                    .addParameter("task_skill_id", taskSkill.getTask_skill_id())
+            connection.createQuery("INSERT INTO \"task_skill\" ( eme_skill_id) VALUES (:eme_skill_id)")
                     .addParameter("eme_skill_id", taskSkill.getEme_skill_id())
                     .executeUpdate();
 

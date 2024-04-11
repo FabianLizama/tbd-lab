@@ -20,15 +20,25 @@ public class EmergencyService implements EmergencyRepository {
     private JwtMiddlewareServices JWT;
 
     @Override
-    // emergency_id, institution_id, name
+    /*    private int emergency_id;
+    private int institution_id;
+
+    private int coordinator_id;
+    private String name;
+
+    private String emergency_state;
+
+     */
+
+
     public EmergencyModel createEmergency(EmergencyModel emergency){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"emergency\" (emergency_id, institution_id, name) VALUES (:emergency_id, :institution_id, :name)")
-                    .addParameter("emergency_id", emergency.getEmergency_id())
+            connection.createQuery("INSERT INTO \"emergency\" (institution_id, coordinator_id, name, emergency_state) VALUES (:institution_id, :coordinator_id, :name, :emergency_state)", true)
                     .addParameter("institution_id", emergency.getInstitution_id())
+                    .addParameter("coordinator_id", emergency.getCoordinator_id())
                     .addParameter("name", emergency.getName())
-                    .executeUpdate();
-
+                    .addParameter("emergency_state", emergency.getEmergency_state())
+                    .executeUpdate().getKey();
             return emergency;
         }catch(Exception e){
             System.out.println(e.getMessage());

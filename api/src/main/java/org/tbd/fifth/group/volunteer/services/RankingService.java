@@ -16,8 +16,8 @@ public class RankingService implements RankingRepository {
     @Override
     public RankingModel createRanking(RankingModel ranking){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"ranking\" (ranking_id, volunteer_id, task_id, grade) VALUES (:ranking_id, :volunteer_id, :task_id, :grade)")
-                    .addParameter("ranking_id", ranking.getRanking_id())
+            connection.createQuery("INSERT INTO \"ranking\" ( volunteer_id, task_id, grade) VALUES ( :volunteer_id, :task_id, :grade)")
+
                     .addParameter("volunteer_id", ranking.getVolunteer_id())
                     .addParameter("task_id", ranking.getTask_id())
                     .addParameter("grade", ranking.getGrade())

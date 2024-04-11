@@ -16,8 +16,7 @@ public class TaskStateService implements TaskStateRepository {
     @Override
     public TaskStateModel createTaskState(TaskStateModel taskState){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"task_state\" (task_state_id, state, description) VALUES (:task_state_id, :state, :description)")
-                    .addParameter("task_state_id", taskState.getTask_state_id())
+            connection.createQuery("INSERT INTO \"task_state\" ( state, description) VALUES ( :state, :description)")
                     .addParameter("state", taskState.getState())
                     .addParameter("description", taskState.getDescription())
                     .executeUpdate();

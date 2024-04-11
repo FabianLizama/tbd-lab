@@ -26,8 +26,7 @@ public class EmergencyLogService implements EmergencyLogRepository {
     @Override
     public EmergencyLogModel createEmergencyLog(EmergencyLogModel emergencyLog){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"emergency_log\" (emergency_log_id, coordinator_id, emergency_id, description, date_change, hour_change) VALUES (:emergency_log_id, :coordinator_id, :emergency_id, :description, :date_change, :hour_change)")
-                    .addParameter("emergency_log_id", emergencyLog.getEmergency_log_id())
+            connection.createQuery("INSERT INTO \"emergency_log\" ( coordinator_id, emergency_id, description, date_change, hour_change) VALUES ( :coordinator_id, :emergency_id, :description, :date_change, :hour_change)")
                     .addParameter("coordinator_id", emergencyLog.getCoordinator_id())
                     .addParameter("emergency_id", emergencyLog.getEmergency_id())
                     .addParameter("description", emergencyLog.getDescription())

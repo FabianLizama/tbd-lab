@@ -16,12 +16,10 @@ public class EmeSkillService implements EmeSkillRepository {
     @Override
     public EmeSkillModel createEmeSkill(EmeSkillModel emeSkill){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"eme_skill\" (eme_skill_id, emergency_id, skill_id) VALUES (:eme_skill_id, :emergency_id, :skill_id)")
-                    .addParameter("eme_skill_id", emeSkill.getEme_skill_id())
+            connection.createQuery("INSERT INTO \"eme_skill\" ( emergency_id, skill_id) VALUES ( :emergency_id, :skill_id)")
                     .addParameter("emergency_id", emeSkill.getEmergency_id())
                     .addParameter("skill_id", emeSkill.getSkill_id())
                     .executeUpdate();
-
             return emeSkill;
         }catch(Exception e){
             System.out.println(e.getMessage());

@@ -16,8 +16,7 @@ public class SkillService implements SkillRepository {
     @Override
     public SkillModel createSkill(SkillModel skill) {
         try (Connection connection = sql2o.open()) {
-            connection.createQuery("INSERT INTO \"skill\" (skill_id, skill_name) VALUES (:skill_id, :skill_name)")
-                    .addParameter("skill_id", skill.getSkill_id())
+            connection.createQuery("INSERT INTO \"skill\" ( skill_name) VALUES (:skill_name)")
                     .addParameter("skill_name", skill.getSkill_name())
                     .executeUpdate();
 

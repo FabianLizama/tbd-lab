@@ -16,8 +16,7 @@ public class TaskService implements TaskRepository{
     @Override
     public TaskModel createTask(TaskModel task){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"task\" (task_id, emergency_id, task_state_id, task_name) VALUES (:task_id, :emergency_id, :task_state_id, :task_name)")
-                    .addParameter("task_id", task.getTask_id())
+            connection.createQuery("INSERT INTO \"task\" ( emergency_id, task_state_id, task_name) VALUES ( :emergency_id, :task_state_id, :task_name)")
                     .addParameter("emergency_id", task.getEmergency_id())
                     .addParameter("task_state_id", task.getTask_state_id())
                     .addParameter("task_name", task.getTask_name())

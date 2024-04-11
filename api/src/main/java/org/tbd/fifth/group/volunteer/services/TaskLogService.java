@@ -16,15 +16,13 @@ public class TaskLogService implements TaskLogRepository {
     @Override
     public TaskLogModel createTaskLog(TaskLogModel taskLog){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"task_log\" (task_log_id, coordinator_id, task_id, description, date_change, hour_change) VALUES (:task_log_id, :coordinator_id, :task_id, :description, :date_change, :hour_change)")
-                    .addParameter("task_log_id", taskLog.getTask_log_id())
+            connection.createQuery("INSERT INTO \"task_log\" ( coordinator_id, task_id, description, date_change, hour_change) VALUES ( :coordinator_id, :task_id, :description, :date_change, :hour_change)")
                     .addParameter("coordinator_id", taskLog.getCoordinator_id())
                     .addParameter("task_id", taskLog.getTask_id())
                     .addParameter("description", taskLog.getDescription())
                     .addParameter("date_change", taskLog.getDate_change())
                     .addParameter("hour_change", taskLog.getHour_change())
                     .executeUpdate();
-
             return taskLog;
         }catch(Exception e){
             System.out.println(e.getMessage());
