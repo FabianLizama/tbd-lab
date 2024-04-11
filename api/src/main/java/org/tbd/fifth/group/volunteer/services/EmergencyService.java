@@ -7,11 +7,17 @@ import org.sql2o.Sql2o;
 import org.tbd.fifth.group.volunteer.models.EmergencyModel;
 import org.tbd.fifth.group.volunteer.repositories.EmergencyRepository;
 
+import java.util.List;
+
+
 @Repository
 public class EmergencyService implements EmergencyRepository {
 
     @Autowired
     private Sql2o sql2o;
+
+    @Autowired
+    private JwtMiddlewareServices JWT;
 
     @Override
     // emergency_id, institution_id, name
@@ -40,6 +46,22 @@ public class EmergencyService implements EmergencyRepository {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public List<EmergencyModel> getAllEmergencies(String token){
+        if(JWT.validateToken(token)) {
+            try (Connection connection = sql2o.open()) {
+                return connection.createQuery("SELECT * FROM \"emergency\"")
+                        .executeAndFetch(EmergencyModel.class);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return null;
+            }
+        }else {
+            return null;
+        }
+
     }
 
 }

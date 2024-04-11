@@ -43,24 +43,25 @@ public class JwtMiddlewareServices implements JwtMiddlewareRepository {
         try{
             Jws<Claims> jws = Jwts
                     .parser()
-                    .verifyWith(secretKey)
+                    .setSigningKey(secretKey)
                     .build()
-                    .parseSignedClaims(token);
-            return !jws.getPayload().getExpiration().before(new Date());
-        }catch(ExpiredJwtException e){
-            e.printStackTrace();
+                    .parseClaimsJws(token); // Asegúrate de usar parseClaimsJws
+            return !jws.getBody().getExpiration().before(new Date());
+        } catch (ExpiredJwtException e) {
+            System.out.println("El token ha expirado.");
             return false;
-        }catch(MalformedJwtException e){
-            e.printStackTrace();
+        } catch (MalformedJwtException e) {
+            System.out.println("El token está mal formado.");
             return false;
-        }catch(Exception e){
-            e.printStackTrace();
+        } catch (SignatureException e) {
+            System.out.println("La firma del JWT no coincide.");
+            return false;
+        } catch (Exception e) {
+            System.out.println("Error al validar el token: " + e.getMessage());
             return false;
         }
-
-
     }
-
+    
     @Override
     public UserModel decodeJWT(String token){
         Claims claims = Jwts
