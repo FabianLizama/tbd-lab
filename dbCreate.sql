@@ -10,20 +10,20 @@ CREATE TABLE Type_User (
 );
 
 CREATE TABLE Skill (
-    skill_id INT NOT NULL,
+    skill_id SERIAL,
     skill_name CHAR(100) NOT NULL,
     PRIMARY KEY (skill_id)
 );
 
 CREATE TABLE Task_state (
-    task_state_id INT NOT NULL,
+    task_state_id SERIAL,
     state CHAR(15) NOT NULL,
     description CHAR(200),
     PRIMARY KEY (task_state_id)
 );
 
 CREATE TABLE Institution (
-    institution_id INT NOT NULL,
+    institution_id SERIAL,
     institution_name CHAR(50) NOT NULL,
     PRIMARY KEY (institution_id)
 );
@@ -40,13 +40,6 @@ CREATE TABLE UserM (
     FOREIGN KEY (type_user_id) REFERENCES Type_User (Type_User_id)
 );
 
-CREATE TABLE Emergency (
-    emergency_id SERIAL,
-    institution_id INT NOT NULL,
-    name CHAR(100) NOT NULL,
-    PRIMARY KEY (emergency_id),
-    FOREIGN KEY (institution_id) REFERENCES Institution (institution_id)
-);
 
 CREATE TABLE Volunteer (
     volunteer_id SERIAL,
@@ -57,17 +50,10 @@ CREATE TABLE Volunteer (
 );
 
 -- Tablas con relaciones más complejas
-CREATE TABLE Eme_skill (
-    eme_skill_id INT NOT NULL,
-    emergency_id INT NOT NULL,
-    skill_id INT NOT NULL,
-    PRIMARY KEY (eme_skill_id),
-    FOREIGN KEY (emergency_id) REFERENCES Emergency (emergency_id),
-    FOREIGN KEY (skill_id) REFERENCES Skill (skill_id)
-);
+
 
 CREATE TABLE Vol_skill (
-    vol_skill_id INT NOT NULL,
+    vol_skill_id SERIAL,
     volunteer_id INT NOT NULL,
     skill_id INT NOT NULL,
     PRIMARY KEY (vol_skill_id),
@@ -84,8 +70,30 @@ CREATE TABLE Coordinator (
     FOREIGN KEY (user_id) REFERENCES UserM (User_id)
 );
 
+CREATE TABLE Emergency (
+    emergency_id SERIAL,
+    institution_id INT NOT NULL,
+	coordinator_id INT NOT NULL,
+    name CHAR(100) NOT NULL,
+	emergency_state char(20),
+    PRIMARY KEY (emergency_id),
+    FOREIGN KEY (institution_id) REFERENCES Institution (institution_id),
+	FOREIGN KEY (coordinator_id) REFERENCES Coordinator (coordinator_id)
+	
+);
+
+CREATE TABLE Eme_skill (
+    eme_skill_id SERIAL,
+    emergency_id INT NOT NULL,
+    skill_id INT NOT NULL,
+    PRIMARY KEY (eme_skill_id),
+    FOREIGN KEY (emergency_id) REFERENCES Emergency (emergency_id),
+    FOREIGN KEY (skill_id) REFERENCES Skill (skill_id)
+);
+
+
 CREATE TABLE Task (
-    task_id INT NOT NULL,
+    task_id SERIAL,
     emergency_id INT NOT NULL,
     task_state_id INT NOT NULL,
     task_skill_id INT NOT NULL,
@@ -97,14 +105,14 @@ CREATE TABLE Task (
 );
 
 CREATE TABLE Task_skill (
-    task_skill_id INT NOT NULL,
+    task_skill_id SERIAL,
     eme_skill_id INT NOT NULL,
     PRIMARY KEY (task_skill_id),
     FOREIGN KEY (eme_skill_id) REFERENCES Eme_skill (eme_skill_id)
 );
 
 CREATE TABLE Ranking (
-    ranking_id INT NOT NULL,
+    ranking_id SERIAL,
     volunteer_id INT NOT NULL,
     task_id INT NOT NULL,
     grade DOUBLE PRECISION NOT NULL,
@@ -114,7 +122,7 @@ CREATE TABLE Ranking (
 );
 
 CREATE TABLE Emergency_log (
-    emergency_log_id INT NOT NULL,
+    emergency_log_id SERIAL,
     coordinator_id INT NOT NULL,
     emergency_id INT NOT NULL,
     description CHAR(200) NOT NULL,
@@ -126,7 +134,7 @@ CREATE TABLE Emergency_log (
 );
 
 CREATE TABLE Task_log (
-    task_log_id INT NOT NULL,
+    task_log_id SERIAL,
     coordinator_id INT NOT NULL,
     task_id INT NOT NULL,
     description CHAR(200) NOT NULL,
