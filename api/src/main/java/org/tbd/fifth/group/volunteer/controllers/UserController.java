@@ -1,5 +1,6 @@
 package org.tbd.fifth.group.volunteer.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.tbd.fifth.group.volunteer.models.UserModel;
 import org.tbd.fifth.group.volunteer.services.UserServices;
@@ -16,7 +17,7 @@ public class UserController {
     }
 
     @PostMapping("/user/register")
-    public String createUser(@RequestBody UserModel user) {
+    public ResponseEntity<Object> createUser(@RequestBody UserModel user) {
         return userServices.createUser(user);
     }
 

@@ -1,11 +1,12 @@
 package org.tbd.fifth.group.volunteer.repositories;
 
 
+import org.springframework.http.ResponseEntity;
 import org.tbd.fifth.group.volunteer.models.UserModel;
 
 public interface UserRepository {
 
-    public String createUser(UserModel user);
+    public ResponseEntity<Object> createUser(UserModel user);
 
     public UserModel getUser(int user_id);
 
