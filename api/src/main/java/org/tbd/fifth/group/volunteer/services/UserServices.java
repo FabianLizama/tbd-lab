@@ -48,7 +48,7 @@ public class UserServices implements UserRepository {
             return ResponseEntity.ok(token);
         } catch (Exception e) {
             // Manejar otras excepciones no esperadas
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
