@@ -14,13 +14,6 @@ VALUES
 ('Search and Rescue'),
 ('Medical Assistance');
 
--- Población de datos para Task_state
-INSERT INTO Task_state (state, description)
-VALUES 
-('Pending', 'Task has not yet been started'),
-('InProgress', 'Task is currently being worked on'),
-('Completed', 'Task has been completed');
-
 -- Población de datos para Institution
 INSERT INTO Institution (institution_name)
 VALUES 
@@ -36,6 +29,14 @@ VALUES
 ((SELECT Type_User_id FROM Type_User WHERE name = 'Coordinator'), 'Pedro', 'coord456', 'pedro1@gmail.com', '987654322'),
 ((SELECT Type_User_id FROM Type_User WHERE name = 'Volunteer'), 'Luis', 'volunteer123', 'luismi@gmail.com', '555555555'),
 ((SELECT Type_User_id FROM Type_User WHERE name = 'Volunteer'), 'Tania', 'volunteer456', 'taniaup@gmail.com', '666666666');
+
+-- Población de datos para Task_state
+INSERT INTO Task_state (user_id, state, description)
+VALUES 
+((SELECT User_id FROM UserM WHERE name = 'Luis'), 'Pending', 'Task has not yet been started'),
+((SELECT User_id FROM UserM WHERE name = 'Luis'),'InProgress', 'Task is currently being worked on'),
+((SELECT User_id FROM UserM WHERE name = 'Tania'),'Completed', 'Task has been completed');
+
 
 -- Población de datos para Volunteer
 INSERT INTO Volunteer (user_id, disponibility)
