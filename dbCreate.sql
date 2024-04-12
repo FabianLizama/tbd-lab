@@ -15,13 +15,6 @@ CREATE TABLE Skill (
     PRIMARY KEY (skill_id)
 );
 
-CREATE TABLE Task_state (
-    task_state_id SERIAL,
-    state CHAR(15) NOT NULL,
-    description CHAR(200),
-    PRIMARY KEY (task_state_id)
-);
-
 CREATE TABLE Institution (
     institution_id SERIAL,
     institution_name CHAR(50) NOT NULL,
@@ -40,6 +33,14 @@ CREATE TABLE UserM (
     FOREIGN KEY (type_user_id) REFERENCES Type_User (Type_User_id)
 );
 
+CREATE TABLE Task_state (
+    task_state_id SERIAL,
+    user_id INT NOT NULL,
+    state CHAR(15) NOT NULL,
+    description CHAR(200),
+    PRIMARY KEY (task_state_id),
+    FOREIGN KEY (user_id) REFERENCES UserM (User_id)
+);
 
 CREATE TABLE Volunteer (
     volunteer_id SERIAL,
