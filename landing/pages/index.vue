@@ -1,8 +1,11 @@
 <script setup>
-import { useRouter } from 'vue-router';
 
 const router = useRouter();
-router.push('/register');
+const tokenCookie = useCookie('token');
+if (!tokenCookie.value) {
+    router.push('/login');
+}
+
 </script>
 
 <template>
