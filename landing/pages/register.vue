@@ -14,13 +14,20 @@ const isDark = computed({
 const config = useRuntimeConfig();
 
 const schema = z.object({
-  email: z.string().email('Correo inválido'),
-  password: z.string().min(8, 'Contraseña debe tener al menos 8 carácteres'),
-})
+    email: z.string().email('Correo inválido'),
+    password: z.string().min(8, 'Contraseña debe tener al menos 8 carácteres'),
+    confirmPassword: z.string().min(8, 'Contraseña debe tener al menos 8 carácteres'),
+    phone: z.string().min(12, 'Número de teléfono inválido'),
+
+}).refine(data => data.password === data.confirmPassword, {
+    message: 'Las contraseñas no coinciden',
+    path: ['confirmPassword'],
+});
 
 const state = reactive({
     userType: 0,
     name: undefined,
+    lastName: undefined,
     email: undefined,
     password: undefined,
     confirmPassword: undefined,
@@ -28,9 +35,17 @@ const state = reactive({
 });
 
 async function handleSubmit (event) {
+
+    const result = schema.safeParse(state);
+    if (!result.success) {
+        const toast = useToast();
+        toast.add({ title: 'Error en los datos ingresados', color: 'red' });
+        return;
+    }
+
     const body = JSON.stringify({
                 type_user_id: state.userType,
-                name: state.name,
+                name: state.name + state.lastName,
                 email: state.email,
                 password: state.password,
                 phone: state.phone
@@ -42,7 +57,7 @@ async function handleSubmit (event) {
         });
         console.log(response);
     } catch (error) {
-        console.error(error);
+        console.log(error);
     }
 }
 
@@ -68,36 +83,35 @@ async function handleSubmit (event) {
                 </div>
                     <h1 class="text-primary text-center text-inherit text-3xl pb-5 pt-2">Registro de Usuario</h1>
             </div>
-            <UForm :schema="schema" :state="state" class="space-y-4" @submit="handleSubmit">
-                <h6>Voluntario o Coordinador</h6>
-                <UFormGroup label="Voluntario?" name="userType">
-                    <UInput v-model="state.userType" />
-                </UFormGroup>
-                <UFormGroup label="Name" name="name">
+            <UForm :schema="schema" :state="state" class="space-y-4 text-center" @submit="handleSubmit">
+                <UFormGroup label="Nombres" name="name">
                     <UInput v-model="state.name" />
                 </UFormGroup>
 
+                <UFormGroup label="Apellidos" name="lastName">
+                    <UInput v-model="state.lastName" />
+                </UFormGroup>
+
                 <UFormGroup label="Email" name="email">
-                    <UInput v-model="state.email" />
+                    <UInput placeholder="you@example.com" v-model="state.email" />
                 </UFormGroup>
                 
-                <UFormGroup label="Password" name="password">
+                <UFormGroup label="Contraseña" name="password">
                     <UInput v-model="state.password" type="password" />
                 </UFormGroup>
                 
-                <UFormGroup label="Confirm Password" name="confirmPassword">
+                <UFormGroup label="Confirmar Constraseña" name="confirmPassword">
                     <UInput v-model="state.confirmPassword" type="password" />
                 </UFormGroup>
                 
-                <UFormGroup label="Phone" name="phone">
-                    <UInput v-model="state.phone" />
+                <UFormGroup label="Celular" name="phone" type="tel">
+                    <UInput placeholder="+56912345678" v-model="state.phone" />
                 </UFormGroup>
 
-                <UButton type="submit">
+                <UButton class="w-1/3 max-w-52 justify-center" type="submit">
                     Submit
                 </UButton>
             </UForm>
         </UCard>
-        
     </div>
 </template>
