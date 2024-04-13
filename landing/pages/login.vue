@@ -1,8 +1,6 @@
 <script setup>
 import { z } from 'zod';
 const colorMode = useColorMode();
-const userStore = useUserStore();
-
 
 const isDark = computed({
   get () {
