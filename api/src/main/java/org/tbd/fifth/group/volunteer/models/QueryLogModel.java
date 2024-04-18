@@ -11,13 +11,16 @@ public class QueryLogModel {
     private LocalTime call_time;
     private String query_type;
 
-   public QueryLogModel(int query_log_id, int user_id, String user_name, LocalDate call_date, LocalTime call_time, String query_type) {
+    private String query_statement;
+
+   public QueryLogModel(int query_log_id, int user_id, String user_name, LocalDate call_date, LocalTime call_time, String query_type, String query_statement) {
        this.query_log_id = query_log_id;
        this.user_id = user_id;
        this.user_name = user_name;
        this.call_date = call_date;
        this.call_time = call_time;
        this.query_type = query_type;
+       this.query_statement = query_statement;
    }
 
     public int getQuery_log_id() {
@@ -66,5 +69,13 @@ public class QueryLogModel {
 
     public void setQuery_type(String query_type) {
        this.query_type = query_type;
+    }
+
+    public String getQuery_statement() {
+       return query_statement;
+    }
+
+    public void setQuery_statement(String query_statement) {
+       this.query_statement = query_statement;
     }
 }

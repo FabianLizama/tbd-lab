@@ -25,8 +25,8 @@ BEGIN
         user_name_m := OLD.name;
     END IF;
 
-    INSERT INTO queries_log (user_id, user_name, call_date, call_time, query_type)
-    VALUES (user_id_m, user_name_m, currentDate, currentTime, query_type_m);
+    INSERT INTO queries_log (user_id, user_name, call_date, call_time, query_type, query_statement)
+    VALUES (user_id_m, user_name_m, currentDate, currentTime, query_type_m, TG_SQL_STATEMENT::TEXT);
 
 	RETURN NULL;
 END;
