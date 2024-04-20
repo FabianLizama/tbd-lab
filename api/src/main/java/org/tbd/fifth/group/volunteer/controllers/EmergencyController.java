@@ -40,4 +40,10 @@ public class EmergencyController {
     public List<EmergencyModel> getEmergenciesActives(@RequestParam String token) {
         return emergencyService.getEmergenciesActives(token);
     }
+
+    @GetMapping("/emergency/view")
+    @ResponseBody
+    public List<EmergencyModel> getEmergenciesView(@RequestParam String token) {
+        return emergencyService.getEmergenciesView(token);
+    }
 }

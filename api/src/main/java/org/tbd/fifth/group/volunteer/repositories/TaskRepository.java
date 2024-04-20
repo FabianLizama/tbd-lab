@@ -23,6 +23,6 @@ public interface TaskRepository {
 
     public boolean deleteAllTasks();
 
-
+    public List<TaskModel> getTaskView(String token);
 
 }

@@ -140,5 +140,19 @@ public class TaskService implements TaskRepository{
         }
     }
 
-
+    @Override
+    public List<TaskModel> getTaskView(String token) {
+        if (JWT.validateToken(token)) {
+            try (Connection connection = sql2o.open()) {
+                // Terminar de incluir la query especializada
+                return connection.createQuery("SELECT task_id, task_name FROM \"task\"")
+                        .executeAndFetch(TaskModel.class);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
 }

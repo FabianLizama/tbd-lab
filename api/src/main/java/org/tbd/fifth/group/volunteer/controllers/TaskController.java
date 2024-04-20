@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import org.tbd.fifth.group.volunteer.models.TaskModel;
 import org.tbd.fifth.group.volunteer.services.TaskService;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
@@ -25,5 +27,11 @@ public class TaskController {
     @ResponseBody
     public TaskModel getTask(@PathVariable int task_id) {
         return taskService.getTask(task_id);
+    }
+
+    @GetMapping("/task/view")
+    @ResponseBody
+    public List<TaskModel> getTaskView(@RequestParam String token) {
+        return taskService.getTaskView(token);
     }
 }

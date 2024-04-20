@@ -14,5 +14,6 @@ public interface EmergencyRepository {
 
     public List<EmergencyModel> getEmergenciesActives(String token);
 
+    public List<EmergencyModel> getEmergenciesView(String token);
 
 }

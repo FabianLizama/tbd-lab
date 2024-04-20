@@ -91,4 +91,19 @@ public class EmergencyService implements EmergencyRepository {
 
     }
 
+    @Override
+    public List<EmergencyModel> getEmergenciesView(String token) {
+        if (JWT.validateToken(token)) {
+            try (Connection connection = sql2o.open()) {
+                // Terminar de incluir la query especializada
+                return connection.createQuery("SELECT emergency_id, emergency_name FROM \"emergency\"")
+                        .executeAndFetch(EmergencyModel.class);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
 }
