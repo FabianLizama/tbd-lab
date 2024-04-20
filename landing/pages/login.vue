@@ -1,7 +1,7 @@
 <script setup>
 import { z } from 'zod';
 const colorMode = useColorMode();
-
+const user = useState('user');
 const isDark = computed({
   get () {
     return colorMode.value === 'dark'
@@ -43,8 +43,21 @@ async function handleSubmit (event) {
         });
         const tokenCookie = useCookie('token');
         tokenCookie.value = response;
+        try {
+            const userResponse = await $fetch(`http://localhost:8080/api/user/email/${state.email}`, {
+                method: 'GET',
+            });
+            user.value = userResponse;
+        } catch (error) {
+            const toast = useToast();
+            toast.add({ title: 'Error en el servidor', color: 'red' });
+        }
         const router = useRouter();
-        router.push('/');
+        if (user.value.type_user_id === 0) {
+            router.push('/coordination');
+        } else if (user.value.type_user_id === 1) {
+            router.push('/volunteer');
+        }
     } catch (error) {
         if (error.response){
             if (error.response.status === 400) {
@@ -64,25 +77,9 @@ async function handleSubmit (event) {
 </script>
 
 <template>
-    <div class="flex justify-center items-center h-screen">
-        <UCard class="w-3/5">
-            <div>
-                <div class="text-end">
-                    <ClientOnly>
-                        <UButton
-                        :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
-                        color="gray"
-                        variant="ghost"
-                        aria-label="Theme"
-                        @click="isDark = !isDark"
-                        />
-                        <template #fallback>
-                            <div class="w-8 h-8" />
-                        </template>
-                    </ClientOnly>
-                </div>
-                    <h1 class="text-primary text-center text-inherit text-3xl pb-5 pt-2">Inicio de Sesión</h1>
-            </div>
+    <div class="flex justify-center items-center content-below-appbar">
+        <UCard class="w-3/5 max-w-2xl">
+            <h1 class="text-primary text-center text-inherit text-3xl py-5">Inicio de Sesión</h1>
             <UForm :schema="schema" :state="state" class="space-y-4 text-center" @submit="handleSubmit">
                 <UFormGroup label="Email" name="email">
                     <UInput placeholder="you@example.com" v-model="state.email" />
@@ -94,7 +91,21 @@ async function handleSubmit (event) {
                 <UButton class="w-1/3 max-w-52 justify-center" type="submit">
                     Submit
                 </UButton>
+                <UFormGroup>
+                    <ULink
+                    to="/register"
+                    class="text-primary text-end underline text-sm"
+                    >
+                        No tengo una cuenta
+                    </ULink>
+                </UFormGroup>
             </UForm>
         </UCard>
     </div>
 </template>
+
+<style>
+.content-below-appbar {
+    height: calc(100vh - 72px)
+}
+</style>

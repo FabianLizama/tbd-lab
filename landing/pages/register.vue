@@ -45,7 +45,7 @@ async function handleSubmit (event) {
 
     const body = JSON.stringify({
                 type_user_id: state.userType,
-                name: state.name + state.lastName,
+                name: state.name + ' ' + state.lastName,
                 email: state.email,
                 password: state.password,
                 phone: state.phone
@@ -77,7 +77,7 @@ async function handleSubmit (event) {
 
 <template>
     <div class="flex justify-center items-center h-screen">
-        <UCard class="w-3/5">
+        <UCard class="w-3/5 max-w-2xl">
             <div>
                 <div class="text-end">
                     <ClientOnly>
@@ -123,6 +123,14 @@ async function handleSubmit (event) {
                 <UButton class="w-1/3 max-w-52 justify-center" type="submit">
                     Submit
                 </UButton>
+                <UFormGroup>
+                    <ULink
+                    to="/login"
+                    class="text-primary text-end underline text-sm"
+                    >
+                        Ya tengo una cuenta
+                    </ULink>
+                </UFormGroup>
             </UForm>
         </UCard>
     </div>
