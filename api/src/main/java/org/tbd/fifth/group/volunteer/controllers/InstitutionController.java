@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import org.tbd.fifth.group.volunteer.services.InstitutionService;
 import org.tbd.fifth.group.volunteer.models.InstitutionModel;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
@@ -29,7 +31,7 @@ public class InstitutionController {
 
     @GetMapping("/institution")
     @ResponseBody
-    public InstitutionModel getAllInstitutions() {
+    public List<InstitutionModel> getAllInstitutions() {
         return institutionService.getAllInstitutions();
     }
 }

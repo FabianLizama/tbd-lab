@@ -7,6 +7,8 @@ import org.sql2o.Sql2o;
 import org.tbd.fifth.group.volunteer.models.InstitutionModel;
 import org.tbd.fifth.group.volunteer.repositories.InstitutionRepository;
 
+import java.util.List;
+
 @Repository
 public class InstitutionService implements InstitutionRepository{
 
@@ -40,10 +42,10 @@ public class InstitutionService implements InstitutionRepository{
     }
 
     @Override
-    public InstitutionModel getAllInstitutions(){
+    public List<InstitutionModel> getAllInstitutions(){
         try(Connection connection = sql2o.open()){
             return connection.createQuery("SELECT * FROM \"institution\"")
-                    .executeAndFetchFirst(InstitutionModel.class);
+                    .executeAndFetch(InstitutionModel.class);
         }catch(Exception e){
             System.out.println(e.getMessage());
             return null;
