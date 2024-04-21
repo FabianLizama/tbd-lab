@@ -144,8 +144,16 @@ public class TaskService implements TaskRepository{
     public List<TaskModel> getTaskView(String token) {
         if (JWT.validateToken(token)) {
             try (Connection connection = sql2o.open()) {
-                // Terminar de incluir la query especializada
-                return connection.createQuery("SELECT task_id, task_name FROM \"task\"")
+                // Verificar que esté en funcionamiento.
+                return connection.createQuery("SELECT tas.task_id, tas.task_name, COUNT(vol.volunteer_id) AS quantity " +
+                                "FROM \"task\" AS tas " +
+                                "JOIN \"task_skill\" AS taskill ON taskill.task_skill_id = tas.task_skill_id " +
+                                "JOIN \"eme_skill\" AS emeski ON emeski.eme_skill_id = taskill.eme_skill_id " +
+                                "JOIN \"skill\" AS ski ON ski.skill_id = emeski.skill_id " +
+                                "JOIN \"vol_skill\" AS volski ON volski.skill_id = ski.skill_id " +
+                                "JOIN \"volunteer\" AS vol ON vol.volunteer_id = volski.volunteer_id " +
+                                "GROUP BY tas.task_id " +
+                                "ORDER BY quantity ASC")
                         .executeAndFetch(TaskModel.class);
             } catch (Exception e) {
                 System.out.println(e.getMessage());

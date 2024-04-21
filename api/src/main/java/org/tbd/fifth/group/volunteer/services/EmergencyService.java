@@ -95,8 +95,15 @@ public class EmergencyService implements EmergencyRepository {
     public List<EmergencyModel> getEmergenciesView(String token) {
         if (JWT.validateToken(token)) {
             try (Connection connection = sql2o.open()) {
-                // Terminar de incluir la query especializada
-                return connection.createQuery("SELECT emergency_id, emergency_name FROM \"emergency\"")
+                // Verificar que esté en funcionamiento.
+                return connection.createQuery("SELECT eme.emergency_id, eme.name, COUNT(vol.volunteer_id) AS quantity " +
+                                "FROM \"emergency\" AS eme " +
+                                "JOIN \"eme_skill\" AS emeski ON emeski.emergency_id = eme.emergency_id " +
+                                "JOIN \"skill\" AS ski ON ski.skill_id = emeski.skill_id " +
+                                "JOIN \"vol_skill\" AS volski ON volski.skill_id = ski.skill_id " +
+                                "JOIN \"volunteer\" AS vol ON vol.volunteer_id = volski.volunteer_id " +
+                                "GROUP BY eme.emergency_id " +
+                                "ORDER BY quantity ASC")
                         .executeAndFetch(EmergencyModel.class);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
