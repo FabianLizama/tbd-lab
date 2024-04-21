@@ -9,27 +9,21 @@ const state = reactive({
 });
 
 async function handleSubmit () {
-    const result = schema.safeParse(state);
-    if (!result.success) {
-        const toast = useToast();
-        toast.add({ title: 'Error en los datos ingresados', color: 'red' });
-        return;
-    }
+    const userUpdated = user.value;
 
-    const body = JSON.stringify({
-        name: state.name,
-        email: state.email,
-        phone: state.phone
-    });
+    userUpdated.name = state.name;
+    userUpdated.email = state.email;
+    userUpdated.phone = state.phone;
+
+    const body = JSON.stringify(userUpdated);
     try {
-        const response = await $fetch('http://localhost:8080/api/user/update', {
+        const response = await $fetch('http://localhost:8080/api/user', {
             method: 'PUT',
             body: body,
         });
         const tokenCookie = useCookie('token');
-        tokenCookie.value = response;
-        const router = useRouter();
-        router.push('/');
+        const toast = useToast();
+        toast.add({ title: 'Datos actualizados', color: 'primary' });
     } catch (error) {
         if (error.response.status === 400) {
             const toast = useToast();

@@ -1,6 +1,7 @@
 <script setup>
 import { z } from 'zod';
 const colorMode = useColorMode();
+const user = useState('user');
 
 const isDark = computed({
   get () {
@@ -42,14 +43,14 @@ async function handleSubmit (event) {
         toast.add({ title: 'Error en los datos ingresados', color: 'red' });
         return;
     }
-
-    const body = JSON.stringify({
+    const userObj = {
                 type_user_id: state.userType,
                 name: state.name + ' ' + state.lastName,
                 email: state.email,
                 password: state.password,
                 phone: state.phone
-            });
+            };
+    const body = JSON.stringify(userObj);
     try {
         const response = await $fetch('http://localhost:8080/api/user/register', {
             method: 'POST',
@@ -57,8 +58,19 @@ async function handleSubmit (event) {
         });
         const tokenCookie = useCookie('token');
         tokenCookie.value = response;
+        const userResponse = await $fetch(`http://localhost:8080/api/user/email/${state.email}`, {
+            method: 'GET',
+        });
+        userObj.user_id = userResponse.user_id;
+        const idCookie = useCookie('user_id');
+        idCookie.value = userObj.user_id;
+        user.value = userObj;
         const router = useRouter();
-        router.push('/');
+        if (user.value.type_user_id === 0) {
+            router.push('/coordination');
+        } else if (user.value.type_user_id === 1) {
+            router.push('/volunteer');
+        }
     } catch (error) {
         if (error.response.status === 400) {
             const toast = useToast();
