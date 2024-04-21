@@ -96,7 +96,7 @@ public class EmergencyService implements EmergencyRepository {
         if (JWT.validateToken(token)) {
             try (Connection connection = sql2o.open()) {
                 // Verificar que esté en funcionamiento.
-                String sql = "SELECT eme.emergency_id, eme.name, COUNT(vol.volunteer_id) AS quantity " +
+                String sql = "SELECT eme.emergency_id, eme.name, COUNT(DISTINCT vol.volunteer_id) AS quantity " +
                                 "FROM \"emergency\" AS eme " +
                                 "LEFT JOIN \"eme_skill\" AS emeski ON emeski.emergency_id = eme.emergency_id " +
                                 "LEFT JOIN \"skill\" AS ski ON ski.skill_id = emeski.skill_id " +
