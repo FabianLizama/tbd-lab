@@ -148,12 +148,10 @@ CREATE TABLE Task_log (
 
 CREATE TABLE Queries_log (
     query_log_id SERIAL,
-    user_id INT NOT NULL,
-    user_name CHAR(50) NOT NULL,
+    user_name TEXT NOT NULL,
     call_date DATE NOT NULL,
     call_time TIME NOT NULL,
     query_type CHAR(50) NOT NULL,
 	query_statement CHAR(200) NOT NULL,
-    PRIMARY KEY (query_log_id),
-    FOREIGN KEY (user_id) REFERENCES Userm (user_id)
+    PRIMARY KEY (query_log_id)
 );

@@ -16,8 +16,7 @@ public class QueryLogService implements QueryLogRepository {
     @Override
     public QueryLogModel createQueryLog(QueryLogModel queryLog) {
         try (Connection connection = sql2o.open()) {
-            connection.createQuery("INSERT INTO \"queries_log\" (user_id, user_name, call_date, call_time, query_type, query_statement) VALUES (:user_id, :user_name, :call_date, :call_time, :query_type, :query_statement)")
-                    .addParameter("user_id",queryLog.getUser_id())
+            connection.createQuery("INSERT INTO \"queries_log\" (user_name, call_date, call_time, query_type, query_statement) VALUES (:user_name, :call_date, :call_time, :query_type, :query_statement)")
                     .addParameter("user_name",queryLog.getUser_name())
                     .addParameter("call_date",queryLog.getCall_date())
                     .addParameter("call_time",queryLog.getCall_time())

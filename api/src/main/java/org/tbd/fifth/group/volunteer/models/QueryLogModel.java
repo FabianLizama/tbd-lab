@@ -5,17 +5,14 @@ import java.time.LocalTime;
 
 public class QueryLogModel {
     private int query_log_id;
-    private int user_id;
     private String user_name;
     private LocalDate call_date;
     private LocalTime call_time;
     private String query_type;
-
     private String query_statement;
 
-   public QueryLogModel(int query_log_id, int user_id, String user_name, LocalDate call_date, LocalTime call_time, String query_type, String query_statement) {
+   public QueryLogModel(int query_log_id, String user_name, LocalDate call_date, LocalTime call_time, String query_type, String query_statement) {
        this.query_log_id = query_log_id;
-       this.user_id = user_id;
        this.user_name = user_name;
        this.call_date = call_date;
        this.call_time = call_time;
@@ -29,14 +26,6 @@ public class QueryLogModel {
 
     public void setQuery_log_id(int query_log_id) {
         this.query_log_id = query_log_id;
-    }
-
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
     }
 
     public String getUser_name() {
