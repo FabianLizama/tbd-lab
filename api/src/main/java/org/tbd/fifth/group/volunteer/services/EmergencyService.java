@@ -96,14 +96,12 @@ public class EmergencyService implements EmergencyRepository {
         if (JWT.validateToken(token)) {
             try (Connection connection = sql2o.open()) {
                 // Verificar que esté en funcionamiento.
-                String sql = "SELECT eme.emergency_id, eme.name, COUNT(DISTINCT vol.volunteer_id) AS quantity " +
-                                "FROM \"emergency\" AS eme " +
-                                "LEFT JOIN \"eme_skill\" AS emeski ON emeski.emergency_id = eme.emergency_id " +
-                                "LEFT JOIN \"skill\" AS ski ON ski.skill_id = emeski.skill_id " +
-                                "LEFT JOIN \"vol_skill\" AS volski ON volski.skill_id = ski.skill_id " +
-                                "LEFT JOIN \"volunteer\" AS vol ON vol.volunteer_id = volski.volunteer_id " +
-                                "GROUP BY eme.emergency_id " +
-                                "ORDER BY quantity ASC";
+                String sql = "SELECT eme.emergency_id, eme.name, COUNT(DISTINCT ran.volunteer_id) AS quantity_Volunteers " +
+                        "FROM \"emergency\" AS eme " +
+                        "LEFT JOIN \"task\" AS tas ON tas.emergency_id = eme.emergency_id " +
+                        "LEFT JOIN \"ranking\" AS ran ON ran.task_id = tas.task_id " +
+                        "GROUP BY eme.emergency_id " +
+                        "ORDER BY quantity_Volunteers ASC";
                 return connection.createQuery(sql).executeAndFetchTable().asList();
             } catch (Exception e) {
                 System.out.println(e.getMessage());

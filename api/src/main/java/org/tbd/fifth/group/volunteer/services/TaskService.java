@@ -145,15 +145,11 @@ public class TaskService implements TaskRepository{
     public List<Map<String, Object>> getTaskView(String token) {
         if (JWT.validateToken(token)) { // Asegúrate de que JWT.validateToken está implementado correctamente
             try (Connection connection = sql2o.open()) {
-                String sql = "SELECT tas.task_id, tas.task_name, COUNT(vol.volunteer_id) AS quantity " +
-                        "FROM \"task\" AS tas " +
-                        "LEFT JOIN \"task_skill\" AS taskill ON taskill.task_skill_id = tas.task_skill_id " +
-                        "LEFT JOIN \"eme_skill\" AS emeski ON emeski.eme_skill_id = taskill.eme_skill_id " +
-                        "LEFT JOIN \"skill\" AS ski ON ski.skill_id = emeski.skill_id " +
-                        "LEFT JOIN \"vol_skill\" AS volski ON volski.skill_id = ski.skill_id " +
-                        "LEFT JOIN \"volunteer\" AS vol ON vol.volunteer_id = volski.volunteer_id " +
-                        "GROUP BY tas.task_id " +
-                        "ORDER BY quantity ASC";
+                String sql = "SELECT tas.task_id, tas.task_name, COUNT(DISTINCT ran.volunteer_id) AS volunteer_quantity " +
+                    "FROM \"task\" AS tas " +
+                    "LEFT JOIN \"ranking\" AS ran ON ran.task_id = tas.task_id " +
+                    "GROUP BY tas.task_id " +
+                    "ORDER BY volunteer_quantity";
                 return connection.createQuery(sql).executeAndFetchTable().asList();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
