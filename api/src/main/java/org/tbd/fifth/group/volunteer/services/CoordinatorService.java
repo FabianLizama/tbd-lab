@@ -40,4 +40,18 @@ public class CoordinatorService implements CoordinatorRepository {
             return null;
         }
     }
+
+
+
+    @Override
+    public int getId_Coordinator(int user_id){
+        try(Connection connection = sql2o.open()){
+            return connection.createQuery("SELECT coordinator_id FROM \"coordinator\" WHERE user_id = :user_id")
+                    .addParameter("user_id", user_id)
+                    .executeAndFetchFirst(Integer.class);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return -1;
+        }
+    }
 }

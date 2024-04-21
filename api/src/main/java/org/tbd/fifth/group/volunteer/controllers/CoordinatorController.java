@@ -25,6 +25,11 @@ public class CoordinatorController {
         return coordinatorService.getCoordinator(coordinator_id);
     }
 
+    @GetMapping("/coordinator/user/{user_id}")
+    public int getId_Coordinator(@PathVariable int user_id) {
+        return coordinatorService.getId_Coordinator(user_id);
+    }
+
 
 
 }
