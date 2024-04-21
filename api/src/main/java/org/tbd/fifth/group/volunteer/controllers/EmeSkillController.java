@@ -27,5 +27,10 @@ public class EmeSkillController {
         return emeSkillService.getEmeSkill(eme_skill_id);
     }
 
+    @GetMapping("/emeSkill/emergency/{emergency_id}")
+    @ResponseBody
+    public Object getEmeSkillsByEmergency(@PathVariable int emergency_id) {
+        return emeSkillService.getEmeSkillsByEmergency(emergency_id);
+    }
 
 }

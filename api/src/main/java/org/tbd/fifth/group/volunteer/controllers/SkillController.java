@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import org.tbd.fifth.group.volunteer.models.SkillModel;
 import org.tbd.fifth.group.volunteer.services.SkillService;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
@@ -25,5 +27,11 @@ public class SkillController {
     @ResponseBody
     public SkillModel getSkill(@PathVariable int skill_id) {
         return skillService.getSkill(skill_id);
+    }
+
+    @GetMapping("/skills")
+    @ResponseBody
+    public List<SkillModel> getSkills() {
+        return skillService.getSkills();
     }
 }

@@ -7,6 +7,9 @@ import org.sql2o.Sql2o;
 import org.tbd.fifth.group.volunteer.models.EmeSkillModel;
 import org.tbd.fifth.group.volunteer.repositories.EmeSkillRepository;
 
+import java.util.List;
+import java.util.Map;
+
 @Repository
 public class EmeSkillService implements EmeSkillRepository {
 
@@ -33,6 +36,34 @@ public class EmeSkillService implements EmeSkillRepository {
             return connection.createQuery("SELECT * FROM \"eme_skill\" WHERE eme_skill_id = :eme_skill_id")
                     .addParameter("eme_skill_id", eme_skill_id)
                     .executeAndFetchFirst(EmeSkillModel.class);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+
+    /*SELECT
+    eme.name AS EmergencyName,
+    ski.skill_name AS SkillName
+FROM
+    emergency eme
+JOIN
+    eme_skill emeski ON eme.emergency_id = emeski.emergency_id
+JOIN
+    skill ski ON emeski.skill_id = ski.skill_id
+WHERE
+    eme.emergency_id = 1
+GROUP BY
+    eme.name, ski.skill_name
+ORDER BY
+    ski.skill_name;*/
+    @Override
+    public List<Map<String, Object>> getEmeSkillsByEmergency(int emergency_id){
+        try(Connection connection = sql2o.open()){
+            return connection.createQuery("SELECT eme.name AS EmergencyName, ski.skill_name AS SkillName FROM emergency eme JOIN eme_skill emeski ON eme.emergency_id = emeski.emergency_id JOIN skill ski ON emeski.skill_id = ski.skill_id WHERE eme.emergency_id = :emergency_id GROUP BY eme.name, ski.skill_name ORDER BY ski.skill_name")
+                    .addParameter("emergency_id", emergency_id)
+                    .executeAndFetchTable().asList();
         }catch(Exception e){
             System.out.println(e.getMessage());
             return null;

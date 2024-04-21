@@ -7,6 +7,8 @@ import org.sql2o.Sql2o;
 import org.tbd.fifth.group.volunteer.models.SkillModel;
 import org.tbd.fifth.group.volunteer.repositories.SkillRepository;
 
+import java.util.List;
+
 @Repository
 public class SkillService implements SkillRepository {
 
@@ -33,6 +35,17 @@ public class SkillService implements SkillRepository {
             return connection.createQuery("SELECT * FROM \"skill\" WHERE skill_id = :skill_id")
                     .addParameter("skill_id", skill_id)
                     .executeAndFetchFirst(SkillModel.class);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<SkillModel> getSkills() {
+        try (Connection connection = sql2o.open()) {
+            return connection.createQuery("SELECT * FROM \"skill\"")
+                    .executeAndFetch(SkillModel.class);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
