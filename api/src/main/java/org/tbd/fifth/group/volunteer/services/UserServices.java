@@ -100,13 +100,15 @@ public class UserServices implements UserRepository {
 
 
     @Override
-    public String loginUser(String email, String password){
+    public ResponseEntity<Object> loginUser(String email, String password){
         try{
             UserModel user = getUserByEmail(email);
             if (user.getPassword().compareTo(password) == 0){
-                return jwtMiddlewareServices.generateToken(user);
+                String token = jwtMiddlewareServices.generateToken(user);
+
+                return ResponseEntity.ok(token);
             }
-            return "Contraseña incorrecta";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
 
         }catch (Exception e){
             System.out.println(e.getMessage());

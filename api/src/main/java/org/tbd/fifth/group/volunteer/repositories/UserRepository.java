@@ -16,5 +16,5 @@ public interface UserRepository {
 
     public UserModel getUserByEmail(String email);
 
-    public String loginUser(String email, String password);
+    public ResponseEntity<Object> loginUser(String email, String password);
 }
