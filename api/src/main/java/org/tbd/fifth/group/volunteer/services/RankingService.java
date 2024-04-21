@@ -16,13 +16,13 @@ public class RankingService implements RankingRepository {
     @Override
     public RankingModel createRanking(RankingModel ranking){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"ranking\" ( volunteer_id, task_id, grade) VALUES ( :volunteer_id, :task_id, :grade)")
+            connection.createQuery("INSERT INTO \"ranking\" ( volunteer_id, task_id, grade,accepted) VALUES ( :volunteer_id, :task_id, :grade, :accepted)")
 
                     .addParameter("volunteer_id", ranking.getVolunteer_id())
                     .addParameter("task_id", ranking.getTask_id())
                     .addParameter("grade", ranking.getGrade())
+                    .addParameter("accepted", ranking.isAccepted())
                     .executeUpdate();
-
             return ranking;
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -41,5 +41,36 @@ public class RankingService implements RankingRepository {
             return null;
         }
     }
+
+    @Override
+    public String createRankingByVolunteerIdAndTaskId(int volunteer_id, int task_id){
+        try (Connection connection = sql2o.open()) {
+            // Primero, cuenta el número de habilidades que el voluntario tiene
+            int grade = connection.createQuery(
+                            "SELECT COUNT(DISTINCT sk.skill_id) " +
+                                    "FROM Volunteer vol " +
+                                    "JOIN Vol_skill vsk ON vol.volunteer_id = vsk.volunteer_id " +
+                                    "JOIN Skill sk ON vsk.skill_id = sk.skill_id " +
+                                    "WHERE vol.volunteer_id = :volunteer_id"
+                    )
+                    .addParameter("volunteer_id", volunteer_id)
+                    .executeScalar(Integer.class);
+
+            // Luego, inserta en la tabla 'ranking' con el 'grade' calculado
+            connection.createQuery(
+                            "INSERT INTO ranking (volunteer_id, task_id, grade, accepted) " +
+                                    "VALUES (:volunteer_id, :task_id, :grade, FALSE)"
+                    )
+                    .addParameter("volunteer_id", volunteer_id)
+                    .addParameter("task_id", task_id)
+                    .addParameter("grade", grade)
+                    .executeUpdate();
+            return "Ranking created";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return "Error creating ranking";
+        }
+    }
+
 
 }

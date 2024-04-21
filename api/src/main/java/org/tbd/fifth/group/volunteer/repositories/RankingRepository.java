@@ -6,4 +6,6 @@ public interface RankingRepository {
     public RankingModel createRanking(RankingModel ranking);
 
     public RankingModel getRanking(int ranking_id);
+
+    public String createRankingByVolunteerIdAndTaskId(int volunteer_id, int task_id);
 }

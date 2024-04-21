@@ -26,4 +26,10 @@ public class RankingController {
     public RankingModel getRanking(@PathVariable int ranking_id) {
         return rankingService.getRanking(ranking_id);
     }
+
+    @PostMapping("/ranking/create")
+    @ResponseBody
+    public String createRankingByVolunterIdAndTaskId(@RequestParam int volunteer_id, @RequestParam int task_id) {
+        return rankingService.createRankingByVolunteerIdAndTaskId(volunteer_id, task_id);
+    }
 }
