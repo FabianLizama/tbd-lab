@@ -9,12 +9,15 @@ public class RankingModel {
 
     private double grade;
 
+    private boolean accepted;
 
-    public RankingModel(int ranking_id, int volunteer_id, int task_id, double grade) {
+
+    public RankingModel(int ranking_id, int volunteer_id, int task_id, double grade, boolean accepted) {
         this.ranking_id = ranking_id;
         this.volunteer_id = volunteer_id;
         this.task_id = task_id;
         this.grade = grade;
+        this.accepted = accepted;
     }
 
     public int getRanking_id() {
@@ -47,5 +50,13 @@ public class RankingModel {
 
     public void setGrade(double grade) {
         this.grade = grade;
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 }
