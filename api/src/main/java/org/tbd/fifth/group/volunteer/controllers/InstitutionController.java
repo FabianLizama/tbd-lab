@@ -27,4 +27,9 @@ public class InstitutionController {
         return institutionService.getInstitution(institution_id);
     }
 
+    @GetMapping("/institution")
+    @ResponseBody
+    public InstitutionModel getAllInstitutions() {
+        return institutionService.getAllInstitutions();
+    }
 }

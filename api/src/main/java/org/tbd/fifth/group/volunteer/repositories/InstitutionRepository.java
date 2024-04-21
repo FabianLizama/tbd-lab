@@ -7,5 +7,7 @@ public interface InstitutionRepository {
 
     public InstitutionModel getInstitution(int institution_id);
 
+    public InstitutionModel getAllInstitutions();
+
 
 }

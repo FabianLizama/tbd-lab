@@ -39,4 +39,15 @@ public class InstitutionService implements InstitutionRepository{
         }
     }
 
+    @Override
+    public InstitutionModel getAllInstitutions(){
+        try(Connection connection = sql2o.open()){
+            return connection.createQuery("SELECT * FROM \"institution\"")
+                    .executeAndFetchFirst(InstitutionModel.class);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
 }
