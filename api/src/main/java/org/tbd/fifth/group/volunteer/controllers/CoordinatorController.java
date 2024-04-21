@@ -25,6 +25,6 @@ public class CoordinatorController {
         return coordinatorService.getCoordinator(coordinator_id);
     }
 
-    @GetMapping("/coordinator")
+
 
 }
