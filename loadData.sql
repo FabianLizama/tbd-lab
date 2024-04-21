@@ -127,8 +127,8 @@ VALUES
 
 
 -- Población de datos para Ranking (Asignamos evaluaciones aleatorias a los voluntarios) del 1 al 10
-INSERT INTO Ranking (volunteer_id, task_id, grade)
-SELECT Volunteer.volunteer_id, Task.task_id, (RANDOM() * 10) + 1
+INSERT INTO Ranking (volunteer_id, task_id, grade, accepted)
+SELECT Volunteer.volunteer_id, Task.task_id, (RANDOM() * 10) + 1, CASE WHEN ((RANDOM() * 10) + 1) >= 2.0 THEN TRUE ELSE FALSE END
 FROM Volunteer
 CROSS JOIN Task
 ORDER BY RANDOM()

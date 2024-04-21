@@ -116,6 +116,7 @@ CREATE TABLE Ranking (
     volunteer_id INT NOT NULL,
     task_id INT NOT NULL,
     grade DOUBLE PRECISION NOT NULL,
+    accepted BOOLEAN NOT NULL,
     PRIMARY KEY (ranking_id),
     FOREIGN KEY (volunteer_id) REFERENCES Volunteer (volunteer_id),
     FOREIGN KEY (task_id) REFERENCES Task (task_id)
