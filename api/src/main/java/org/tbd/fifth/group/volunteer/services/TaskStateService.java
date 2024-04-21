@@ -39,4 +39,21 @@ public class TaskStateService implements TaskStateRepository {
             return null;
         }
     }
+
+    @Override
+    public TaskStateModel UpdateTaskState(TaskStateModel taskState){
+        try(Connection connection = sql2o.open()){
+            connection.createQuery("UPDATE \"task_state\" SET state = :state, description = :description, user_id = :user_id WHERE task_state_id = :task_state_id")
+                    .addParameter("state", taskState.getState())
+                    .addParameter("description", taskState.getDescription())
+                    .addParameter("task_state_id", taskState.getTask_state_id())
+                    .addParameter("user_id", taskState.getUser_id())
+                    .executeUpdate();
+
+            return taskState;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

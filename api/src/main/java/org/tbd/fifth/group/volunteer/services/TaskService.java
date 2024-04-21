@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.tbd.fifth.group.volunteer.models.TaskModel;
+import org.tbd.fifth.group.volunteer.models.TaskStateModel;
 import org.tbd.fifth.group.volunteer.repositories.TaskRepository;
 
 import java.util.List;
@@ -20,12 +21,20 @@ public class TaskService implements TaskRepository{
     private JwtMiddlewareServices JWT;
 
     @Override
-    public TaskModel createTask(TaskModel task){
+    public TaskModel createTask(TaskModel task, int user_id){
         try(Connection connection = sql2o.open()){
             connection.createQuery("INSERT INTO \"task\" ( emergency_id, task_state_id, task_name) VALUES ( :emergency_id, :task_state_id, :task_name)")
                     .addParameter("emergency_id", task.getEmergency_id())
                     .addParameter("task_state_id", task.getTask_state_id())
                     .addParameter("task_name", task.getTask_name())
+                    .executeUpdate();
+
+            //Aquí insertamos un nuevo taskState en la base de datos
+
+            connection.createQuery("INSERT INTO \"task_state\" (state, description,user_id) VALUES (:state, :description,:user_id)")
+                    .addParameter("state", "Created" )
+                    .addParameter("description", "Task has been created")
+                    .addParameter("user_id", user_id)
                     .executeUpdate();
 
             return task;
@@ -156,6 +165,41 @@ public class TaskService implements TaskRepository{
                 return null;
             }
         } else {
+            return null;
+        }
+    }
+
+
+
+
+    /*SELECT
+    task.task_id,
+    task.task_name,
+    task_state.state AS task_state
+FROM
+    Task task
+JOIN
+    Task_state task_state ON task.task_state_id = task_state.task_state_id
+
+WHERE
+    task.emergency_id = 1;*/
+
+    @Override
+    public List<Map<String, Object>> getTaskViewByEmergencyId(int emergency_id) {
+        try (Connection connection = sql2o.open()) {
+            String sql = "SELECT " +
+                "task.task_id, " +
+                "task.task_name, " +
+                "task_state.state AS task_state " +
+                "FROM " +
+                "Task task " +
+                "JOIN " +
+                "Task_state task_state ON task.task_state_id = task_state.task_state_id " +
+                "WHERE " +
+                "task.emergency_id = :emergency_id";
+            return connection.createQuery(sql).addParameter("emergency_id", emergency_id).executeAndFetchTable().asList();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }

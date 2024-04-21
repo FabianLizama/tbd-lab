@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface TaskRepository {
-    public TaskModel createTask(TaskModel task);
+    public TaskModel createTask(TaskModel task, int user_id);
 
     public TaskModel getTask(int task_id);
 
@@ -25,5 +25,9 @@ public interface TaskRepository {
     public boolean deleteAllTasks();
 
     public List<Map<String,Object>> getTaskView(String token);
+
+    public List<Map<String,Object>> getTaskViewByEmergencyId(int emergency_id);
+
+
 
 }

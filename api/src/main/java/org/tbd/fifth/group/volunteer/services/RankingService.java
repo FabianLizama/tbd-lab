@@ -59,11 +59,12 @@ public class RankingService implements RankingRepository {
             // Luego, inserta en la tabla 'ranking' con el 'grade' calculado
             connection.createQuery(
                             "INSERT INTO ranking (volunteer_id, task_id, grade, accepted) " +
-                                    "VALUES (:volunteer_id, :task_id, :grade, FALSE)"
+                                    "VALUES (:volunteer_id, :task_id, :grade,:accepted)"
                     )
                     .addParameter("volunteer_id", volunteer_id)
                     .addParameter("task_id", task_id)
                     .addParameter("grade", grade)
+                    .addParameter("accepted", true)
                     .executeUpdate();
             return "Ranking created";
         } catch (Exception e) {

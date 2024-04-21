@@ -4,11 +4,13 @@ public class TaskStateModel {
     private int task_state_id;
     private String state;
     private String description;
+    private int user_id;
 
-    public TaskStateModel(int task_state_id, String state, String description) {
+    public TaskStateModel(int task_state_id, String state, String description, int user_id) {
         this.task_state_id = task_state_id;
         this.state = state;
         this.description = description;
+        this.user_id = user_id;
     }
 
     public int getTask_state_id() {
@@ -35,5 +37,11 @@ public class TaskStateModel {
         this.description = description;
     }
 
-    // Getters y setters...
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
 }

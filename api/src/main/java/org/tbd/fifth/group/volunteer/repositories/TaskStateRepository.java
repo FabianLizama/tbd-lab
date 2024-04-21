@@ -7,4 +7,6 @@ public interface TaskStateRepository {
     public TaskStateModel createTaskState(TaskStateModel taskState);
 
     public TaskStateModel getTaskState(int task_state_id);
+
+    public TaskStateModel UpdateTaskState(TaskStateModel taskState);
 }

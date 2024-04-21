@@ -24,4 +24,9 @@ public class TaskStateController {
     public TaskStateModel getTaskState(@PathVariable int task_state_id){
         return taskStateService.getTaskState(task_state_id);
     }
+
+    @PutMapping("/task_state")
+    public TaskStateModel updateTaskState(@RequestBody TaskStateModel taskState){
+        return taskStateService.UpdateTaskState(taskState);
+    }
 }

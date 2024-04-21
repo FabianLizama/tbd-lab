@@ -20,8 +20,8 @@ public class TaskController {
 
     @PostMapping("/task")
     @ResponseBody
-    public TaskModel createTask(@RequestBody TaskModel task) {
-        return taskService.createTask(task);
+    public TaskModel createTask(@RequestBody TaskModel task, @RequestParam int user_id) {
+        return taskService.createTask(task, user_id);
     }
 
     @GetMapping("/task/{task_id}")
@@ -34,5 +34,11 @@ public class TaskController {
     @ResponseBody
     public List<Map<String,Object>> getTaskView(@RequestParam String token) {
         return taskService.getTaskView(token);
+    }
+
+    @GetMapping("/task/view/emergency/{emergency_id}")
+    @ResponseBody
+    public List<Map<String,Object>> getTaskViewByEmergencyId(@PathVariable int emergency_id) {
+        return taskService.getTaskViewByEmergencyId(emergency_id);
     }
 }
