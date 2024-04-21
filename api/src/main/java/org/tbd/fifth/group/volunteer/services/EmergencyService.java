@@ -98,10 +98,10 @@ public class EmergencyService implements EmergencyRepository {
                 // Verificar que esté en funcionamiento.
                 String sql = "SELECT eme.emergency_id, eme.name, COUNT(vol.volunteer_id) AS quantity " +
                                 "FROM \"emergency\" AS eme " +
-                                "JOIN \"eme_skill\" AS emeski ON emeski.emergency_id = eme.emergency_id " +
-                                "JOIN \"skill\" AS ski ON ski.skill_id = emeski.skill_id " +
-                                "JOIN \"vol_skill\" AS volski ON volski.skill_id = ski.skill_id " +
-                                "JOIN \"volunteer\" AS vol ON vol.volunteer_id = volski.volunteer_id " +
+                                "LEFT JOIN \"eme_skill\" AS emeski ON emeski.emergency_id = eme.emergency_id " +
+                                "LEFT JOIN \"skill\" AS ski ON ski.skill_id = emeski.skill_id " +
+                                "LEFT JOIN \"vol_skill\" AS volski ON volski.skill_id = ski.skill_id " +
+                                "LEFT JOIN \"volunteer\" AS vol ON vol.volunteer_id = volski.volunteer_id " +
                                 "GROUP BY eme.emergency_id " +
                                 "ORDER BY quantity ASC";
                 return connection.createQuery(sql).executeAndFetchTable().asList();
