@@ -17,4 +17,7 @@ public interface EmergencyRepository {
 
     public List<Map<String, Object>> getEmergenciesView(String token);
 
+    public List<Map<String,Object>> getEmergenciesActivesView(String token);
+
+
 }

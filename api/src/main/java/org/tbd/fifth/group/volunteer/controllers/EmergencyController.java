@@ -47,4 +47,10 @@ public class EmergencyController {
     public List<Map<String, Object>> getEmergenciesView(@RequestParam String token) {
         return emergencyService.getEmergenciesView(token);
     }
+
+    @GetMapping("/emergency/actives/view")
+    @ResponseBody
+    public List<Map<String, Object>> getEmergenciesActivesView(@RequestParam String token) {
+        return emergencyService.getEmergenciesActivesView(token);
+    }
 }
