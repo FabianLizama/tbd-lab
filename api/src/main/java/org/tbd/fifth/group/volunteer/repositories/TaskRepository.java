@@ -3,6 +3,7 @@ package org.tbd.fifth.group.volunteer.repositories;
 import org.tbd.fifth.group.volunteer.models.TaskModel;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TaskRepository {
     public TaskModel createTask(TaskModel task);
@@ -23,6 +24,6 @@ public interface TaskRepository {
 
     public boolean deleteAllTasks();
 
-    public List<TaskModel> getTaskView(String token);
+    public List<Map<String,Object>> getTaskView(String token);
 
 }

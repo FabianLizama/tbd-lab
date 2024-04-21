@@ -5,6 +5,7 @@ import org.tbd.fifth.group.volunteer.models.TaskModel;
 import org.tbd.fifth.group.volunteer.services.TaskService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -31,7 +32,7 @@ public class TaskController {
 
     @GetMapping("/task/view")
     @ResponseBody
-    public List<TaskModel> getTaskView(@RequestParam String token) {
+    public List<Map<String,Object>> getTaskView(@RequestParam String token) {
         return taskService.getTaskView(token);
     }
 }
