@@ -3,6 +3,7 @@ package org.tbd.fifth.group.volunteer.repositories;
 import org.tbd.fifth.group.volunteer.models.EmergencyModel;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EmergencyRepository {
 
@@ -14,6 +15,6 @@ public interface EmergencyRepository {
 
     public List<EmergencyModel> getEmergenciesActives(String token);
 
-    public List<EmergencyModel> getEmergenciesView(String token);
+    public List<Map<String, Object>> getEmergenciesView(String token);
 
 }

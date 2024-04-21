@@ -8,7 +8,7 @@ import org.tbd.fifth.group.volunteer.models.EmergencyModel;
 import org.tbd.fifth.group.volunteer.repositories.EmergencyRepository;
 
 import java.util.List;
-
+import java.util.Map;
 
 @Repository
 public class EmergencyService implements EmergencyRepository {
@@ -92,19 +92,19 @@ public class EmergencyService implements EmergencyRepository {
     }
 
     @Override
-    public List<EmergencyModel> getEmergenciesView(String token) {
+    public List<Map<String, Object>> getEmergenciesView(String token) {
         if (JWT.validateToken(token)) {
             try (Connection connection = sql2o.open()) {
                 // Verificar que esté en funcionamiento.
-                return connection.createQuery("SELECT eme.emergency_id, eme.name, COUNT(vol.volunteer_id) AS quantity " +
+                String sql = "SELECT eme.emergency_id, eme.name, COUNT(vol.volunteer_id) AS quantity " +
                                 "FROM \"emergency\" AS eme " +
                                 "JOIN \"eme_skill\" AS emeski ON emeski.emergency_id = eme.emergency_id " +
                                 "JOIN \"skill\" AS ski ON ski.skill_id = emeski.skill_id " +
                                 "JOIN \"vol_skill\" AS volski ON volski.skill_id = ski.skill_id " +
                                 "JOIN \"volunteer\" AS vol ON vol.volunteer_id = volski.volunteer_id " +
                                 "GROUP BY eme.emergency_id " +
-                                "ORDER BY quantity ASC")
-                        .executeAndFetch(EmergencyModel.class);
+                                "ORDER BY quantity ASC";
+                return connection.createQuery(sql).executeAndFetchTable().asList();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 return null;

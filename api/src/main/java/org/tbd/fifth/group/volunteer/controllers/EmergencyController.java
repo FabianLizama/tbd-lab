@@ -5,6 +5,7 @@ import org.tbd.fifth.group.volunteer.models.EmergencyModel;
 import org.tbd.fifth.group.volunteer.services.EmergencyService;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -43,7 +44,7 @@ public class EmergencyController {
 
     @GetMapping("/emergency/view")
     @ResponseBody
-    public List<EmergencyModel> getEmergenciesView(@RequestParam String token) {
+    public List<Map<String, Object>> getEmergenciesView(@RequestParam String token) {
         return emergencyService.getEmergenciesView(token);
     }
 }
