@@ -82,10 +82,9 @@ public class UserServices implements UserRepository {
     @Override
     public UserModel updateUser(UserModel user){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("UPDATE \"userm\" SET type_user_id = :type_user_id, name = :name, password = :password, email = :email, phone = :phone WHERE user_id = :user_id")
+            connection.createQuery("UPDATE \"userm\" SET type_user_id = :type_user_id, name = :name, email = :email, phone = :phone WHERE user_id = :user_id")
                     .addParameter("type_user_id", user.getType_user_id())
                     .addParameter("name", user.getName())
-                    .addParameter("password", user.getPassword())
                     .addParameter("email", user.getEmail())
                     .addParameter("phone", user.getPhone())
                     .addParameter("user_id", user.getUser_id())
