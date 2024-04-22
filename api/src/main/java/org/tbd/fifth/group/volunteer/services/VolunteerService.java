@@ -25,6 +25,7 @@ public class VolunteerService implements VolunteerRepository {
                     .addParameter("disponibility", volunteer.isDisponibility())
                     .addParameter("user_id", volunteer.getUser_id())
                     .executeUpdate();
+
             return volunteer;
         }catch(Exception e){
             System.out.println(e.getMessage());
