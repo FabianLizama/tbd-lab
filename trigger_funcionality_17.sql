@@ -34,32 +34,3 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- coordinator
-CREATE TRIGGER query_log_trigger_coordinator
-AFTER INSERT OR UPDATE OR DELETE ON coordinator
-FOR EACH STATEMENT
-EXECUTE FUNCTION query_modification_log();
-
--- emergency
-CREATE TRIGGER query_log_trigger_emergency
-AFTER INSERT OR UPDATE OR DELETE ON emergency
-FOR EACH STATEMENT
-EXECUTE FUNCTION query_modification_log();
-
--- institution
-CREATE TRIGGER query_log_trigger_institution
-AFTER INSERT OR UPDATE OR DELETE ON institution
-FOR EACH STATEMENT
-EXECUTE FUNCTION query_modification_log();
-
--- ranking
-CREATE TRIGGER query_log_trigger_ranking
-AFTER INSERT OR UPDATE OR DELETE ON ranking
-FOR EACH STATEMENT
-EXECUTE FUNCTION query_modification_log();
-
--- skill
-CREATE TRIGGER query_log_trigger_skill
-AFTER INSERT OR UPDATE OR DELETE ON skill
-FOR EACH STATEMENT
-EXECUTE FUNCTION query_modification_log();
