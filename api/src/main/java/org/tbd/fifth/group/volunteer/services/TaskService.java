@@ -192,7 +192,8 @@ WHERE
         try (Connection connection = sql2o.open()) {
             String sql = "SELECT " +
                 "task.task_id, " +
-                "task.task_name, " +
+                "task.task_name," +
+                    "task.task_state_id, " +
                 "task_state.state AS task_state " +
                 "FROM " +
                 "Task task " +
