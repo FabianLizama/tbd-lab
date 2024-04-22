@@ -3,6 +3,9 @@
 ### Integrantes de grupo 5
 * Jaime Riquelme
 * Fabian lizama
+* Cristobal Torres
+* Fernando Solís
+* Camilo Campos
 
 # Herramientas de desarrollo
 
