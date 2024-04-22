@@ -44,6 +44,12 @@ public class UserServices implements UserRepository {
             user.setUser_id(userId); // Establecer el ID del usuario
             String token = jwtMiddlewareServices.generateToken(user); // Generar token
 
+            //Creamos un voluntario con el id del usuario
+            connection.createQuery("INSERT INTO \"volunteer\" (disponibility, user_id) VALUES (:disponibility, :user_id)")
+                    .addParameter("disponibility", true)
+                    .addParameter("user_id", userId)
+                    .executeUpdate();
+
             // Devolver el token con un código 200 OK
             return ResponseEntity.ok(token);
         } catch (Exception e) {
