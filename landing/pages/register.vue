@@ -58,14 +58,11 @@ async function handleSubmit (event) {
             method: 'POST',
             body: body,
         });
-        const tokenCookie = useCookie('token');
         tokenCookie.value = response;
         const userResponse = await $fetch(`http://localhost:8080/api/user/email/${state.email}`, {
             method: 'GET',
         });
         userObj.user_id = userResponse.user_id;
-        const idCookie = useCookie('user_id');
-        idCookie.value = userObj.user_id;
         user.setUser(userObj);
         const router = useRouter();
         if (user.type_user_id === 0) {
