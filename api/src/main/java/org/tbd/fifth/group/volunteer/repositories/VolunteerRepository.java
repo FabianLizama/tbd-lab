@@ -1,4 +1,5 @@
 package org.tbd.fifth.group.volunteer.repositories;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.tbd.fifth.group.volunteer.models.VolunteerModel;
 
@@ -15,5 +16,7 @@ public interface VolunteerRepository {
     public VolunteerModel updateVolunteer(VolunteerModel volunteer);
 
     public VolunteerModel deleteVolunteer(int volunteer_id);
+
+    public ResponseEntity<Integer> getVolunteerIdByUserId(int user_id);
 
 }

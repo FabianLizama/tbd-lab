@@ -55,11 +55,10 @@ VALUES
 INSERT INTO Task_state (user_id, state, description)
 VALUES
 ((SELECT User_id FROM UserM WHERE name = 'Luis'), 'Pending', 'Task has not yet been started'),
-((SELECT User_id FROM UserM WHERE name = 'Luis'),'Work in Progress', 'Task is currently being worked on'),
+((SELECT User_id FROM UserM WHERE name = 'Luis'),'In Progress', 'Task is currently being worked on'),
 ((SELECT User_id FROM UserM WHERE name = 'Tania'),'Completed', 'Task has been completed'),
-((SELECT User_id FROM UserM WHERE name = 'Sofia'),'Work in Progress', 'Task is currently being worked on'),
+((SELECT User_id FROM UserM WHERE name = 'Sofia'),'In Progress', 'Task is currently being worked on'),
 ((SELECT User_id FROM UserM WHERE name = 'Daniel'),'Pending', 'Task has not yet been started');
-
 
 -- Población de datos para Volunteer
 INSERT INTO Volunteer (user_id, disponibility)
@@ -109,19 +108,18 @@ SELECT eme_skill_id
 FROM Eme_skill;
 
 -- Población de datos para Task
--- Población de datos para Task
 INSERT INTO Task (emergency_id, task_state_id, task_skill_id, task_name)
 VALUES 
 ((SELECT emergency_id FROM Emergency WHERE name = 'Fire in downtown' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'Pending' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Evacuate building'),
-((SELECT emergency_id FROM Emergency WHERE name = 'Fire in downtown' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'InProgress' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Administer first aid'),
+((SELECT emergency_id FROM Emergency WHERE name = 'Fire in downtown' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'In Progress' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Administer first aid'),
 ((SELECT emergency_id FROM Emergency WHERE name = 'Earthquake in suburbs' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'Pending' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Rescue trapped people'),
-((SELECT emergency_id FROM Emergency WHERE name = 'Earthquake in suburbs' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'InProgress' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Provide medical assistance'),
+((SELECT emergency_id FROM Emergency WHERE name = 'Earthquake in suburbs' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'In Progress' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Provide medical assistance'),
 ((SELECT emergency_id FROM Emergency WHERE name = 'Flood in the city' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'Pending' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Evacuate flooded areas'),
-((SELECT emergency_id FROM Emergency WHERE name = 'Flood in the city' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'InProgress' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Provide shelter to affected people'),
+((SELECT emergency_id FROM Emergency WHERE name = 'Flood in the city' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'In Progress' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Provide shelter to affected people'),
 ((SELECT emergency_id FROM Emergency WHERE name = 'Tsunami in the coast' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'Pending' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Evacuate coastal areas'),
-((SELECT emergency_id FROM Emergency WHERE name = 'Tsunami in the coast' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'InProgress' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Provide food to affected people'),
+((SELECT emergency_id FROM Emergency WHERE name = 'Tsunami in the coast' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'In Progress' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Provide food to affected people'),
 ((SELECT emergency_id FROM Emergency WHERE name = 'Hurricane in the city' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'Pending' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Evacuate hurricane path'),
-((SELECT emergency_id FROM Emergency WHERE name = 'Hurricane in the city' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'InProgress' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Provide medical assistance to affected people');
+((SELECT emergency_id FROM Emergency WHERE name = 'Hurricane in the city' LIMIT 1), (SELECT task_state_id FROM Task_state WHERE state = 'In Progress' LIMIT 1), (SELECT task_skill_id FROM Task_skill ORDER BY RANDOM() LIMIT 1), 'Provide medical assistance to affected people');
 
 
 
