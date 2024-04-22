@@ -23,19 +23,22 @@ public class TaskService implements TaskRepository{
     @Override
     public TaskModel createTask(TaskModel task, int user_id){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("INSERT INTO \"task\" ( emergency_id, task_state_id, task_name) VALUES ( :emergency_id, :task_state_id, :task_name)")
-                    .addParameter("emergency_id", task.getEmergency_id())
-                    .addParameter("task_state_id", task.getTask_state_id())
-                    .addParameter("task_name", task.getTask_name())
-                    .executeUpdate();
 
-            //Aquí insertamos un nuevo taskState en la base de datos
-
-            connection.createQuery("INSERT INTO \"task_state\" (state, description,user_id) VALUES (:state, :description,:user_id)")
+            int task_state_id = (int) connection.createQuery("INSERT INTO \"task_state\" (state, description,user_id) VALUES (:state, :description,:user_id)")
                     .addParameter("state", "Created" )
                     .addParameter("description", "Task has been created")
                     .addParameter("user_id", user_id)
+                    .executeUpdate()
+                    .getKey();
+
+
+            connection.createQuery("INSERT INTO \"task\" ( emergency_id, task_state_id, task_name) VALUES ( :emergency_id, :task_state_id, :task_name)")
+                    .addParameter("emergency_id", task.getEmergency_id())
+                    .addParameter("task_state_id", task_state_id)
+                    .addParameter("task_name", task.getTask_name())
                     .executeUpdate();
+
+            task.setTask_state_id(task_state_id);
 
             return task;
         }catch(Exception e){

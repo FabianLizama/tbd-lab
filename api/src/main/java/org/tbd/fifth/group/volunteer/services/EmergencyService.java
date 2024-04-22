@@ -79,7 +79,7 @@ public class EmergencyService implements EmergencyRepository {
     public List<EmergencyModel> getEmergenciesActives(String token) {
         if (JWT.validateToken(token)) {
             try (Connection connection = sql2o.open()) {
-                return connection.createQuery("SELECT * FROM \"emergency\" WHERE emergency_state = 'active'")
+                return connection.createQuery("SELECT * FROM \"emergency\" WHERE emergency_state = 'Active'")
                         .executeAndFetch(EmergencyModel.class);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
