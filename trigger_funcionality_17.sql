@@ -9,28 +9,4 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION query_modification_log()
-RETURNS TRIGGER AS $$
-DECLARE
-    currentDate DATE;
-    currentTime TIME;
-    query_type_m TEXT;
-BEGIN
-    currentDate := CURRENT_DATE;
-    currentTime := CURRENT_TIME;
-
-    IF TG_OP = 'INSERT' THEN
-        query_type_m := 'Inserción';
-    ELSIF TG_OP = 'UPDATE' THEN
-        query_type_m = 'Actualización';
-    ELSIF TG_OP = 'DELETE' THEN
-        query_type_m = 'Eliminación';
-    END IF;
-
-    INSERT INTO queries_log (user_name, call_date, call_time, query_type, query_statement)
-    VALUES (CURRENT_USER, currentDate, currentTime, query_type_m, CURRENT_QUERY());
-
-	RETURN NULL;
-END;
-$$ LANGUAGE plpgsql;
 
