@@ -53,11 +53,11 @@ VALUES
 
 -- Población de datos para Task_state
 INSERT INTO Task_state (user_id, state, description)
-VALUES 
+VALUES
 ((SELECT User_id FROM UserM WHERE name = 'Luis'), 'Pending', 'Task has not yet been started'),
-((SELECT User_id FROM UserM WHERE name = 'Luis'),'InProgress', 'Task is currently being worked on'),
+((SELECT User_id FROM UserM WHERE name = 'Luis'),'Work in Progress', 'Task is currently being worked on'),
 ((SELECT User_id FROM UserM WHERE name = 'Tania'),'Completed', 'Task has been completed'),
-((SELECT User_id FROM UserM WHERE name = 'Sofia'),'InProgress', 'Task is currently being worked on'),
+((SELECT User_id FROM UserM WHERE name = 'Sofia'),'Work in Progress', 'Task is currently being worked on'),
 ((SELECT User_id FROM UserM WHERE name = 'Daniel'),'Pending', 'Task has not yet been started');
 
 
@@ -89,11 +89,11 @@ VALUES
 -- Población de datos para Emergency
 INSERT INTO Emergency (institution_id, coordinator_id, name, emergency_state)
 VALUES 
-((SELECT institution_id FROM Institution WHERE institution_name = 'Red Cross'), (SELECT coordinator_id FROM Coordinator c, Institution i WHERE i.institution_name = 'Red Cross' AND i.institution_id = c.institution_id), 'Fire in downtown', 'Active'),
-((SELECT institution_id FROM Institution WHERE institution_name = 'Fire Department'), (SELECT coordinator_id FROM Coordinator c, Institution i WHERE i.institution_name = 'Fire Department' AND i.institution_id = c.institution_id), 'Earthquake in suburbs', 'Active'),
-((SELECT institution_id FROM Institution WHERE institution_name = 'Medical Center'), (SELECT coordinator_id FROM Coordinator c, Institution i WHERE i.institution_name = 'Medical Center' AND i.institution_id = c.institution_id), 'Flood in the city', 'Active'),
-((SELECT institution_id FROM Institution WHERE institution_name = 'Police Department'), (SELECT coordinator_id FROM Coordinator c, Institution i WHERE i.institution_name = 'Police Department' AND i.institution_id = c.institution_id), 'Tsunami in the coast', 'Active'),
-((SELECT institution_id FROM Institution WHERE institution_name = 'Civil Protection'), (SELECT coordinator_id FROM Coordinator c, Institution i WHERE i.institution_name = 'Civil Protection' AND i.institution_id = c.institution_id), 'Hurricane in the city', 'Active');
+((SELECT institution_id FROM Institution WHERE institution_name = 'Red Cross'), (SELECT coordinator_id FROM Coordinator c, Institution i WHERE i.institution_name = 'Red Cross' AND i.institution_id = c.institution_id), 'Fire in downtown', 'In progress'),
+((SELECT institution_id FROM Institution WHERE institution_name = 'Fire Department'), (SELECT coordinator_id FROM Coordinator c, Institution i WHERE i.institution_name = 'Fire Department' AND i.institution_id = c.institution_id), 'Earthquake in suburbs', 'In progress'),
+((SELECT institution_id FROM Institution WHERE institution_name = 'Medical Center'), (SELECT coordinator_id FROM Coordinator c, Institution i WHERE i.institution_name = 'Medical Center' AND i.institution_id = c.institution_id), 'Flood in the city', 'In progress'),
+((SELECT institution_id FROM Institution WHERE institution_name = 'Police Department'), (SELECT coordinator_id FROM Coordinator c, Institution i WHERE i.institution_name = 'Police Department' AND i.institution_id = c.institution_id), 'Tsunami in the coast', 'In progress'),
+((SELECT institution_id FROM Institution WHERE institution_name = 'Civil Protection'), (SELECT coordinator_id FROM Coordinator c, Institution i WHERE i.institution_name = 'Civil Protection' AND i.institution_id = c.institution_id), 'Hurricane in the city', 'In progress');
 
 -- Población de datos para Eme_skill (Asignamos habilidades aleatorias a las emergencias)
 INSERT INTO Eme_skill (emergency_id, skill_id)
