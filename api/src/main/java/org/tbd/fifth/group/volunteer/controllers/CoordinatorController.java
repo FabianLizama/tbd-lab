@@ -1,5 +1,6 @@
 package org.tbd.fifth.group.volunteer.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.tbd.fifth.group.volunteer.models.CoordinatorModel;
 import org.tbd.fifth.group.volunteer.services.CoordinatorService;
@@ -26,7 +27,7 @@ public class CoordinatorController {
     }
 
     @GetMapping("/coordinator/user/{user_id}")
-    public int getId_Coordinator(@PathVariable int user_id) {
+    public ResponseEntity<Integer> getId_Coordinator(@PathVariable int user_id) {
         return coordinatorService.getId_Coordinator(user_id);
     }
 

@@ -1,6 +1,7 @@
 package org.tbd.fifth.group.volunteer.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -42,16 +43,25 @@ public class CoordinatorService implements CoordinatorRepository {
     }
 
 
+    /*SELECT coordinator_id
+FROM Coordinator
+WHERE user_id = 10;
+*/
 
     @Override
-    public int getId_Coordinator(int user_id){
-        try(Connection connection = sql2o.open()){
-            return connection.createQuery("SELECT coordinator_id FROM \"coordinator\" WHERE user_id = :user_id")
+    public ResponseEntity<Integer> getId_Coordinator(int user_id) {
+        try (Connection connection = sql2o.open()) {
+            Integer coordinator_id = connection.createQuery("SELECT coordinator_id FROM \"coordinator\" WHERE user_id = :user_id")
                     .addParameter("user_id", user_id)
-                    .executeAndFetchFirst(Integer.class);
-        }catch(Exception e){
+                    .executeScalar(Integer.class);
+            if (coordinator_id != null) {
+                return ResponseEntity.ok(coordinator_id);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            return -1;
+            return ResponseEntity.status(500).build();
         }
     }
 }
