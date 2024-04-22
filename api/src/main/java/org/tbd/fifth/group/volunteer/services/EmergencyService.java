@@ -117,7 +117,7 @@ public class EmergencyService implements EmergencyRepository {
     public List<Map<String,Object>> getEmergenciesActivesView(String token){
         if(JWT.validateToken(token)){
             try(Connection connection = sql2o.open()){
-                String sql = "SELECT eme.name AS EmergencyName, inst.institution_name AS InstitutionName, usr.name AS CoordinatorName " +
+                String sql = "SELECT eme.emergency_id AS emergencyId, eme.name AS EmergencyName, inst.institution_name AS InstitutionName, usr.name AS CoordinatorName " +
                         "FROM emergency AS eme " +
                         "JOIN institution AS inst ON eme.institution_id = inst.institution_id " +
                         "JOIN coordinator AS coord ON eme.coordinator_id = coord.coordinator_id " +
