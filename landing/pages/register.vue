@@ -68,9 +68,9 @@ async function handleSubmit (event) {
         idCookie.value = userObj.user_id;
         user.setUser(userObj);
         const router = useRouter();
-        if (user.value.type_user_id === 0) {
+        if (user.type_user_id === 0) {
             router.push('/coordination');
-        } else if (user.value.type_user_id === 1) {
+        } else if (user.type_user_id === 1) {
             router.push('/volunteer');
         }
     } catch (error) {
