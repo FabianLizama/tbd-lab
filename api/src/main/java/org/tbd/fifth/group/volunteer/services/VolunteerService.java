@@ -1,6 +1,7 @@
 package org.tbd.fifth.group.volunteer.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.tbd.fifth.group.volunteer.models.VolunteerModel;
 import org.tbd.fifth.group.volunteer.repositories.VolunteerRepository;
@@ -82,4 +83,23 @@ public class VolunteerService implements VolunteerRepository {
             return null;
         }
     }
+
+
+    @Override
+    public ResponseEntity<Integer> getVolunteerIdByUserId(int user_id) {
+        try (Connection connection = sql2o.open()) {
+            Integer volunteer_id = connection.createQuery("SELECT volunteer_id FROM \"volunteer\" WHERE user_id = :user_id")
+                    .addParameter("user_id", user_id)
+                    .executeScalar(Integer.class);
+            if (volunteer_id != null) {
+                return ResponseEntity.ok(volunteer_id);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(500).build();
+        }
+    }
+
 }
