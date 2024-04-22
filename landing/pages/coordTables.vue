@@ -1,5 +1,6 @@
 <script setup>
 // lógica tabla de emergencias
+const tokenCookie = useCookie('token');
 
 const em_columns = [{
     key: 'emergency_id',
@@ -13,9 +14,14 @@ const em_columns = [{
 }
 ]
 
-//const emergencies = ref(data.value);
+const emergencies = await $fetch('http://localhost:8080/api/emergency/view', {
+  method: 'GET',
+  params: {
+    token: tokenCookie.value
+  }
+})
 
-const emergencies = [
+/*const emergencies = [
   { emergency_id: 1, name: 'Incendio', quantity_volunteers: 10 },
   { emergency_id: 2, name: 'Inundación', quantity_volunteers: 5 },
   { emergency_id: 3, name: 'Terremoto', quantity_volunteers: 15 },
@@ -37,6 +43,7 @@ const emergencies = [
   { emergency_id: 19, name: 'Tormenta de Lluvia', quantity_volunteers: 18 },
   { emergency_id: 20, name: 'Tormenta de Granizo', quantity_volunteers: 19 }
 ]
+*/
 const em_page = ref(1)
 const em_pageCount = 10
 
@@ -53,32 +60,17 @@ const ta_columns = [{
     key: 'task_name',
     label: 'Tarea',
 }, {
-    key: 'quantity',
+    key: 'volunteer_quantity',
     label: 'Voluntarios Inscritos',
 }
 ]
 
-// const tasks = ref([]);
-const tasks = [
-  { task_id: 1, task_name: 'Recolección de Basura', quantity: 10 },
-  { task_id: 2, task_name: 'Recolección de Escombros', quantity: 5 },
-  { task_id: 3, task_name: 'Recolección de Alimentos', quantity: 15 },
-  { task_id: 4, task_name: 'Recolección de Medicamentos', quantity: 3 },
-  { task_id: 5, task_name: 'Recolección de Ropa', quantity: 7 },
-  { task_id: 6, task_name: 'Recolección de Agua', quantity: 2 },
-  { task_id: 7, task_name: 'Recolección de Juguetes', quantity: 1 },
-  { task_id: 8, task_name: 'Recolección de Muebles', quantity: 4 },
-  { task_id: 9, task_name: 'Recolección de Electrodomésticos', quantity: 6 },
-  { task_id: 10, task_name: 'Recolección de Electrónicos', quantity: 8 },
-  { task_id: 11, task_name: 'Recolección de Papel', quantity: 9 },
-  { task_id: 12, task_name: 'Recolección de Cartón', quantity: 11 },
-  { task_id: 13, task_name: 'Recolección de Plástico', quantity: 12 },
-  { task_id: 14, task_name: 'Recolección de Vidrio', quantity: 13 },
-  { task_id: 15, task_name: 'Recolección de Metal', quantity: 14 },
-  { task_id: 16, task_name: 'Recolección de Madera', quantity: 15 },
-  { task_id: 17, task_name: 'Recolección de Papel', quantity: 16 },
-  { task_id: 18, task_name: 'Recolección de Cartón', quantity: 17 }
-]
+const tasks = await $fetch('http://localhost:8080/api/task/view', {
+  method: 'GET',
+  params: {
+    token: tokenCookie.value
+  }
+})
 
 const ta_page = ref(1)
 const ta_pageCount = 10

@@ -1,4 +1,5 @@
 <script setup>
+const user = userStore()
 const colorMode = useColorMode();
 
 const isDark = computed({
@@ -11,19 +12,22 @@ const isDark = computed({
 })
 
 const tokenCookie = useCookie('token');
-const userStore = useState('user')
 const router = useRouter();
 
 function logout() {
     tokenCookie.value = undefined;
-    userStore.value = {
-        user_id: -1,
-        type_user_id: -1,
-        name: '',
-        email: '',
-        phone: ''
-    }
+    user.$reset();
     router.push('/login');
+}
+
+function home() {
+    if (tokenCookie.value) {
+        if (user.type_user_id === 0) {
+            router.push('/coordination');
+        } else if (user.type_user_id === 1) {
+            router.push('/volunteer');
+        }
+    }
 }
 
 </script>
@@ -31,8 +35,15 @@ function logout() {
 <template>
     <div class="py-3.5 px-6 shadow md:flex justify-between items-center ">
         <div class="flex items-center justify-between">
+            <UButton
+                icon="i-heroicons-home-solid"
+                color="primary"
+                variant="ghost"
+                @click="home">
+            </UButton>
             <ClientOnly>
                 <UButton
+                class="ml-2"
                 :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
                 color="gray"
                 variant="ghost"

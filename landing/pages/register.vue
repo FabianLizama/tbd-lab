@@ -1,16 +1,17 @@
 <script setup>
 import { z } from 'zod';
 const colorMode = useColorMode();
-const user = useState('user');
-
-const isDark = computed({
-  get () {
-    return colorMode.value === 'dark'
-  },
-  set () {
-    colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
-  }
-})
+//const user = useState('user');
+const user = userStore();
+const tokenCookie = useCookie('token');
+const router = useRouter();
+if (tokenCookie.value) {
+    if (user.type_user_id === 0) {
+        router.push('/coordination');
+    } else if (user.type_user_id === 1) {
+        router.push('/volunteer');
+    }
+}
 
 const config = useRuntimeConfig();
 
@@ -26,7 +27,7 @@ const schema = z.object({
 });
 
 const state = reactive({
-    userType: 0,
+    userType: 1,
     name: undefined,
     lastName: undefined,
     email: undefined,
@@ -50,6 +51,7 @@ async function handleSubmit (event) {
                 password: state.password,
                 phone: state.phone
             };
+
     const body = JSON.stringify(userObj);
     try {
         const response = await $fetch('http://localhost:8080/api/user/register', {
@@ -64,7 +66,7 @@ async function handleSubmit (event) {
         userObj.user_id = userResponse.user_id;
         const idCookie = useCookie('user_id');
         idCookie.value = userObj.user_id;
-        user.value = userObj;
+        user.setUser(userObj);
         const router = useRouter();
         if (user.value.type_user_id === 0) {
             router.push('/coordination');
@@ -91,21 +93,7 @@ async function handleSubmit (event) {
     <div class="flex justify-center items-center h-screen">
         <UCard class="w-3/5 max-w-2xl">
             <div>
-                <div class="text-end">
-                    <ClientOnly>
-                        <UButton
-                        :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
-                        color="gray"
-                        variant="ghost"
-                        aria-label="Theme"
-                        @click="isDark = !isDark"
-                        />
-                        <template #fallback>
-                            <div class="w-8 h-8" />
-                        </template>
-                    </ClientOnly>
-                </div>
-                    <h1 class="text-primary text-center text-inherit text-3xl pb-5 pt-2">Registro de Usuario</h1>
+                <h1 class="text-primary font-bold text-center text-inherit text-3xl pb-5 pt-2">Registro de Usuario</h1>
             </div>
             <UForm :schema="schema" :state="state" class="space-y-4 text-center" @submit="handleSubmit">
                 <UFormGroup label="Nombres" name="name">

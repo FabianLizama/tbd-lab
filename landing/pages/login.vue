@@ -1,15 +1,16 @@
 <script setup>
 import { z } from 'zod';
 const colorMode = useColorMode();
-const user = useState('user');
-const isDark = computed({
-  get () {
-    return colorMode.value === 'dark'
-  },
-  set () {
-    colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
-  }
-})
+const user = userStore();
+const tokenCookie = useCookie('token');
+
+if (tokenCookie.value) {
+    if (user.type_user_id === 0) {
+        router.push('/coordination');
+    } else if (user.type_user_id === 1) {
+        router.push('/volunteer');
+    }
+}
 
 const config = useRuntimeConfig();
 
@@ -47,15 +48,15 @@ async function handleSubmit (event) {
             const userResponse = await $fetch(`http://localhost:8080/api/user/email/${state.email}`, {
                 method: 'GET',
             });
-            user.value = userResponse;
+            user.setUser(userResponse);
         } catch (error) {
             const toast = useToast();
             toast.add({ title: 'Error en el servidor', color: 'red' });
         }
         const router = useRouter();
-        if (user.value.type_user_id === 0) {
+        if (user.type_user_id === 0) {
             router.push('/coordination');
-        } else if (user.value.type_user_id === 1) {
+        } else if (user.type_user_id === 1) {
             router.push('/volunteer');
         }
     } catch (error) {
@@ -79,7 +80,7 @@ async function handleSubmit (event) {
 <template>
     <div class="flex justify-center items-center content-below-appbar">
         <UCard class="w-3/5 max-w-2xl">
-            <h1 class="text-primary text-center text-inherit text-3xl py-5">Inicio de Sesión</h1>
+            <h1 class="text-primary font-bold text-center text-inherit text-3xl py-5">Inicio de Sesión</h1>
             <UForm :schema="schema" :state="state" class="space-y-4 text-center" @submit="handleSubmit">
                 <UFormGroup label="Email" name="email">
                     <UInput placeholder="you@example.com" v-model="state.email" />

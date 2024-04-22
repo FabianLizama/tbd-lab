@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
     '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt'
   ],
   ui: {
     global: true,

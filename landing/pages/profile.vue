@@ -1,20 +1,21 @@
 <script setup>
-const user = useState('user');
+const user = userStore()
 
 const state = reactive({
-    userType: 0,
-    name: user.value.name,
-    email: user.value.email,
-    phone: user.value.phone,
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
 });
 
 async function handleSubmit () {
-    const userUpdated = user.value;
+    const userUpdated = user.getUser();
 
     userUpdated.name = state.name;
     userUpdated.email = state.email;
     userUpdated.phone = state.phone;
-
+    user.name = state.name;
+    user.email = state.email;
+    user.phone = state.phone;
     const body = JSON.stringify(userUpdated);
     try {
         const response = await $fetch('http://localhost:8080/api/user', {
