@@ -21,6 +21,7 @@
     "pinia-plugin-persistedstate": "^3.2.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
+    "vue3-google-map": "^0.20.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
