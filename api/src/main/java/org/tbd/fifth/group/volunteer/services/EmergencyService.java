@@ -141,8 +141,8 @@ public class EmergencyService implements EmergencyRepository {
                 String sql = "SELECT eme.* " +
                         "FROM \"emergency\" AS eme " +
                         "CROSS JOIN \"regions\" AS reg " +
-                        "WHERE reg.name = " + name +
-                        " AND ST_Intersects(ST_SetSRID(ST_MakePoint(eme.longitude,eme.latitude), 4326), reg.geom)";
+                        "WHERE reg.name = " + "\'" + name + "\' " +
+                        "AND ST_Intersects(ST_SetSRID(ST_MakePoint(eme.longitude,eme.latitude), 4326), reg.geom)";
                 return connection.createQuery(sql).executeAndFetchTable().asList();
             }catch(Exception e){
                 System.out.println(e.getMessage());
