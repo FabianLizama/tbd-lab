@@ -134,4 +134,22 @@ public class EmergencyService implements EmergencyRepository {
             return null;
         }
     }
+
+    public List<Map<String,Object>> getEmergenciesByRegion(String name, String token){
+        if(JWT.validateToken(token)){
+            try(Connection connection = sql2o.open()){
+                String sql = "SELECT eme.* " +
+                        "FROM \"emergency\" AS eme " +
+                        "CROSS JOIN \"regions\" AS reg " +
+                        "WHERE reg.name = " + name +
+                        " AND ST_Intersects(ST_SetSRID(ST_MakePoint(eme.longitude,eme.latitude), 4326), reg.geom)";
+                return connection.createQuery(sql).executeAndFetchTable().asList();
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+                return null;
+            }
+        }else{
+            return null;
+        }
+    }
 }
