@@ -9,12 +9,17 @@ public class EmergencyModel {
 
     private String emergency_state;
 
-    public EmergencyModel(int emergency_id, int institution_id, String name, String emergency_state, int coordinator_id) {
+    private double  longitude;
+    private double latitude;
+
+    public EmergencyModel(int emergency_id, int institution_id, String name, String emergency_state, int coordinator_id, double longitude, double latitude) {
         this.emergency_id = emergency_id;
         this.institution_id = institution_id;
         this.name = name;
         this.emergency_state = emergency_state;
         this.coordinator_id = coordinator_id;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     public int getEmergency_id() {
@@ -55,5 +60,18 @@ public class EmergencyModel {
 
     public void setEmergency_state(String emergency_state) {
         this.emergency_state = emergency_state;
+    }
+
+    public double getLongitude() {
+        return this.longitude;
+    }
+    public double getLatitude() {
+        return this.latitude;
+    }
+    public void setLongitude(double length) {
+        this.longitude = length;
+    }
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 }

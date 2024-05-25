@@ -32,10 +32,12 @@ public class TaskService implements TaskRepository{
                     .getKey();
 
 
-            connection.createQuery("INSERT INTO \"task\" ( emergency_id, task_state_id, task_name) VALUES ( :emergency_id, :task_state_id, :task_name)")
+            connection.createQuery("INSERT INTO \"task\" ( emergency_id, task_state_id, task_name) VALUES ( :emergency_id, :task_state_id, :task_name, :longitude, :latitude))")
                     .addParameter("emergency_id", task.getEmergency_id())
                     .addParameter("task_state_id", task_state_id)
                     .addParameter("task_name", task.getTask_name())
+                    .addParameter("longitude", task.getLongitude())
+                    .addParameter("latitude", task.getLatitude())
                     .executeUpdate();
 
             task.setTask_state_id(task_state_id);
@@ -120,6 +122,8 @@ public class TaskService implements TaskRepository{
                     .addParameter("task_state_id", task.getTask_state_id())
                     .addParameter("task_name", task.getTask_name())
                     .addParameter("task_id", task.getTask_id())
+                    .addParameter("longitude", task.getLongitude())
+                    .addParameter("latitude", task.getLatitude())
                     .executeUpdate();
             return true;
         }catch(Exception e){
