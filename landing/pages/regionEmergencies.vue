@@ -73,7 +73,7 @@ async function fetchEmergencies() {
 </script>
 
 <template>
-  <div class="flex pt-14 items-center justify-around">
+  <div class="flex items-center justify-center content-below-appbar">
     <UCard>
         <h1 class="text-primary text-center text-inherit text-2xl pb-5 pt-2">Emergencias</h1>
         <UFormGroup label="Región" name="region">
@@ -86,3 +86,9 @@ async function fetchEmergencies() {
     </UCard>
   </div>
 </template>
+
+<style>
+.content-below-appbar {
+    height: calc(100vh - 72px)
+}
+</style>
