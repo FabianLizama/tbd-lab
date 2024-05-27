@@ -2,8 +2,8 @@
 ## Este laboratorio fue desarrollado por el grupo n°5.
 ### Integrantes de grupo 5
 * Jaime Riquelme
-* Fabian lizama
-* Cristobal Torres
+* Fabián lizama
+* Cristóbal Torres
 * Fernando Solís
 * Camilo Campos
 
@@ -20,8 +20,8 @@
 * Postman
 
 ## Frontend
-* VUE versión 3
-* nuxt 3
+* VUE 3
+* Nuxt 3
 
 # Guía de Instalación y Ejecución
 Esta guía te ayudará a configurar tu entorno de desarrollo para trabajar con IntelliJ IDEA, PostgreSQL, pgAdmin y ejecutar un proyecto de Vue.js en la carpeta de frontend.
