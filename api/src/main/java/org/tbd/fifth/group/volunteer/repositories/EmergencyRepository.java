@@ -19,5 +19,5 @@ public interface EmergencyRepository {
 
     public List<Map<String,Object>> getEmergenciesActivesView(String token);
 
-
+    public List<Map<String,Object>> getEmergenciesByRegion(String name, String token);
 }
