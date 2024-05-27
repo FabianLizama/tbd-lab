@@ -1,4 +1,4 @@
-# Laboratorio 1 - Taller de Base de Datos/Bases de datos Avanzadas
+# Laboratorio 2 - Taller de Base de Datos/Bases de datos Avanzadas
 ## Este laboratorio fue desarrollado por el grupo n°5.
 ### Integrantes de grupo 5
 * Jaime Riquelme
@@ -28,7 +28,7 @@ Esta guía te ayudará a configurar tu entorno de desarrollo para trabajar con I
 
 ## 1. Clonar el repositorio
 
-git clone https://github.com/FabianLizama/tbd-entrega1-5
+git clone https://github.com/FabianLizama/tbd-lab.git
 
 ## 2. Instalación de IntelliJ IDEA
 
