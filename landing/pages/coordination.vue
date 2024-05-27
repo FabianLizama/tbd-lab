@@ -8,6 +8,7 @@
             <div class="flex justify-center items-center">
                 <UButton class="w-40 h-40 m-10 text-center" size="xl" label="Crear Emergencia" color="primary" to="/createEmergency" />
                 <UButton to="/coordTables" class="w-40 h-40 m-10 text-center" size="xl" label="Ver Cantidad Voluntarios" color="primary" />
+                <UButton to="/regionEmergencies" class="w-40 h-40 m-10 text-center" size="xl" label="Ver Emergencias Por Región" color="primary" />
             </div>
         </UCard>
     </div>
