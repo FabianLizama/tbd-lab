@@ -54,9 +54,9 @@ public class EmergencyController {
         return emergencyService.getEmergenciesActivesView(token);
     }
 
-    @GetMapping("/emergency/region/{name}")
+    @GetMapping("/emergency/region")
     @ResponseBody
-    public List<Map<String, Object>> getEmergenciesByRegion(@PathVariable String name, @RequestParam String token) {
+    public List<Map<String, Object>> getEmergenciesByRegion(@RequestParam String name, @RequestParam String token) {
         return emergencyService.getEmergenciesByRegion(name, token);
     }
 }
