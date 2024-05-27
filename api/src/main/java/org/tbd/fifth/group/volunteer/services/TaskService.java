@@ -32,9 +32,10 @@ public class TaskService implements TaskRepository{
                     .getKey();
 
 
-            connection.createQuery("INSERT INTO \"task\" ( emergency_id, task_state_id, task_name) VALUES ( :emergency_id, :task_state_id, :task_name, :longitude, :latitude))")
+            connection.createQuery("INSERT INTO \"task\" ( emergency_id, task_state_id, task_skill_id, task_name, longitude, latitude) VALUES ( :emergency_id, :task_state_id, :task_skill_id, :task_name, :longitude, :latitude)")
                     .addParameter("emergency_id", task.getEmergency_id())
                     .addParameter("task_state_id", task_state_id)
+                    .addParameter("task_skill_id", task.getTask_skill_id())
                     .addParameter("task_name", task.getTask_name())
                     .addParameter("longitude", task.getLongitude())
                     .addParameter("latitude", task.getLatitude())
@@ -117,9 +118,10 @@ public class TaskService implements TaskRepository{
     @Override
     public boolean updateTask(TaskModel task){
         try(Connection connection = sql2o.open()){
-            connection.createQuery("UPDATE \"task\" SET emergency_id = :emergency_id, task_state_id = :task_state_id, task_name = :task_name WHERE task_id = :task_id")
+            connection.createQuery("UPDATE \"task\" SET emergency_id = :emergency_id, task_state_id = :task_state_id, task_skill_id = :task_skill_id, task_name = :task_name, longitude = :longitude, latitude = :latitude WHERE task_id = :task_id")
                     .addParameter("emergency_id", task.getEmergency_id())
                     .addParameter("task_state_id", task.getTask_state_id())
+                    .addParameter("task_skill_id", task.getTask_skill_id())
                     .addParameter("task_name", task.getTask_name())
                     .addParameter("task_id", task.getTask_id())
                     .addParameter("longitude", task.getLongitude())

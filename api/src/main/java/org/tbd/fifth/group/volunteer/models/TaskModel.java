@@ -4,14 +4,16 @@ public class TaskModel {
     private int task_id;
     private int emergency_id;
     private int task_state_id;
+    private int task_skill_id;
     private String task_name;
     private double longitude;
     private double latitude;
 
-    public TaskModel(int task_id, int emergency_id, int task_state_id, String task_name, double longitude, double latitude) {
+    public TaskModel(int task_id, int emergency_id, int task_state_id, String task_name, int task_skill_id, double longitude, double latitude) {
         this.task_id = task_id;
         this.emergency_id = emergency_id;
         this.task_state_id = task_state_id;
+        this.task_skill_id = task_skill_id;
         this.task_name = task_name;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -40,6 +42,8 @@ public class TaskModel {
     public void setTask_state_id(int task_state_id) {
         this.task_state_id = task_state_id;
     }
+
+    public int getTask_skill_id() { return task_skill_id; }
 
     public String getTask_name() {
         return task_name;

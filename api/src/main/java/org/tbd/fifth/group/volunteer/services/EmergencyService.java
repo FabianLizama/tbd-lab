@@ -33,13 +33,13 @@ public class EmergencyService implements EmergencyRepository {
     public EmergencyModel createEmergency(EmergencyModel emergency, String token){
         if(JWT.validateToken(token)){
             try(Connection connection = sql2o.open()){
-                connection.createQuery("INSERT INTO \"emergency\" (institution_id, coordinator_id, name, emergency_state) VALUES (:institution_id, :coordinator_id, :name, :emergency_state, :longitude, :latitude)")
+                connection.createQuery("INSERT INTO \"emergency\" (institution_id, coordinator_id, name, emergency_state, longitude, latitude) VALUES (:institution_id, :coordinator_id, :name, :emergency_state, :longitude, :latitude)")
                         .addParameter("institution_id", emergency.getInstitution_id())
                         .addParameter("coordinator_id", emergency.getCoordinator_id())
                         .addParameter("name", emergency.getName())
                         .addParameter("emergency_state", emergency.getEmergency_state())
                         .addParameter("longitude", emergency.getLongitude())
-                        .addParameter("latidude", emergency.getLatitude())
+                        .addParameter("latitude", emergency.getLatitude())
                         .executeUpdate();
             }catch(Exception e){
                 System.out.println(e.getMessage());
