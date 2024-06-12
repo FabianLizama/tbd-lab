@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface VolunteerRepository extends MongoRepository<Volunteer, ObjectId> {
-    
+
     List<Volunteer> findByFullname(String fullname);
 
 
