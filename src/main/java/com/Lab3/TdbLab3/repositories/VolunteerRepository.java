@@ -8,13 +8,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface VolunteerRepository extends MongoRepository<Volunteer, ObjectId> {
-
-    // Buscar voluntarios por nombre completo
+    
     List<Volunteer> findByFullname(String fullname);
 
-    // Ejemplo de una agregación compleja: obtener detalles de habilidades de los voluntarios
-    // Ejemplo de una agregación compleja: obtener detalles de habilidades de los voluntarios basado en el RUT
-    // Ejemplo de una agregación compleja: obtener detalles de habilidades de los voluntarios basado en el RUT
+
     @Aggregation(pipeline = {
             "{ $match: { 'rut': ?0 } }",
             "{ $lookup: { from: 'Skill', localField: 'abilities._id', foreignField: '_id', as: 'skills' } }",
