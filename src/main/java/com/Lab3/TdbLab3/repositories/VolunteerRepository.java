@@ -19,4 +19,12 @@ public interface VolunteerRepository extends MongoRepository<Volunteer, ObjectId
             "{ $project: { 'skills.code': 1, 'skills.name': 1, 'skills.items': 1, 'skills.description': 1 } }"
     })
     List<Object> findVolunteerSkillsByRut(String rut);
+
+    @Aggregation(pipeline = {
+        "{ $lookup: { from: 'Skill', localField: 'abilities._id', foreignField: '_id', as: 'skills' } }",
+        "{ $unwind: { path: '$skills', preserveNullAndEmptyArrays: true } }",
+        "{ $match: { 'skills.name': ?0 } }",
+        "{ $project: { 'fullname': 1 } }"
+})
+List<Object> findVolunteersBySkillName(String skillName);
 }

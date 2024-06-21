@@ -37,4 +37,12 @@ public class VolunteerService {
         return volunteerRepository.findVolunteerSkillsByRut(rut);
     }
 
+    @GetMapping("/volunteers/skill1/{skillName}")
+    public List<Object> getVolunteersBySkillName(@PathVariable("skillName") String skillName) {
+    System.out.println("Searching for volunteers with skill: " + skillName);
+    List<Object> volunteers = volunteerRepository.findVolunteersBySkillName(skillName);
+    System.out.println("Found " + volunteers.size() + " volunteers");
+    return volunteers;
+}
+
 }
