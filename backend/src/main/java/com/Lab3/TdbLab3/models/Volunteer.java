@@ -2,6 +2,7 @@ package com.Lab3.TdbLab3.models;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public class Volunteer {
     private Double latitude;
     private Double longitude;
     private String geom;
+
+    @DBRef
     private List<Skill> Skills;
 
     public String getRut() {

@@ -25,6 +25,6 @@ public interface VolunteerRepository extends MongoRepository<Volunteer, ObjectId
         "{ $unwind: { path: '$skills', preserveNullAndEmptyArrays: true } }",
         "{ $match: { 'skills.name': ?0 } }",
         "{ $project: { 'fullname': 1 } }"
-})
-List<Object> findVolunteersBySkillName(String skillName);
+    })
+    List<Object> findVolunteersBySkillName(String skillName);
 }
