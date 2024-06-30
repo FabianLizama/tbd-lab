@@ -1,178 +1,141 @@
 <script setup>
-import { z } from 'zod';
-import { reactive } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, reactive } from 'vue'
+import { z } from 'zod'
 
 const schema = z.object({
     rut: z.string().regex(/^\d{7,8}-\d{1}$/, 'RUT inválido')
-});
+})
 
 const state = reactive({
-    rut: '',
-    skills: [],
-    errorMessage: ''
-});
+    rut: ''
+})
 
-const router = useRouter();
+const skills = ref([])
+const errorMessage = ref('')
+const isLoading = ref(false)
+const showErrorCircle = ref(false)
+const showErrorMessage = ref(false)
 
-async function handleSubmit(event) {
-    event.preventDefault();
-    state.errorMessage = '';
-    const result = schema.safeParse(state);
+async function handleSubmit() {
+    errorMessage.value = ''
+    skills.value = []
+    isLoading.value = true
+    showErrorCircle.value = false
+    showErrorMessage.value = false
+    
+    const result = schema.safeParse(state)
     if (!result.success) {
-        state.errorMessage = 'RUT inválido o No contiene habilidades';
-        return;
+        errorMessage.value = 'RUT inválido'
+        await showError()
+        return
     }
     
     try {
         const response = await $fetch(`http://localhost:8080/volunteers/skills/${state.rut}`, {
             method: 'GET'
-        });
-        state.skills = response;
-        if (state.skills.length === 0) {
-            state.errorMessage = 'No se encontró el usuario, o no contiene Skills.';
+        })
+        skills.value = response
+        if (skills.value.length === 0) {
+            errorMessage.value = 'No se encontró el usuario, o no contiene Skills.'
+            await showError()
         }
     } catch (error) {
-        state.skills = [];
-        state.errorMessage = 'No se encontró el usuario, o no contiene Skills.';
+        errorMessage.value = 'No se encontró el usuario, o no contiene Skills.'
+        await showError()
+    } finally {
+        isLoading.value = false
     }
+}
+
+async function showError() {
+    isLoading.value = false
+    showErrorCircle.value = true
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    showErrorMessage.value = true
 }
 </script>
 
 <template>
-    <div class="flex justify-center items-center content-below-appbar">
-        <div class="card">
-            <h1 class="title">Buscar Habilidades</h1>
-            <form @submit="handleSubmit" class="form">
-                <div class="form-group">
-                    <label for="rut" class="form-label">RUT</label>
-                    <input id="rut" name="rut" v-model="state.rut" placeholder="20000002-3" class="form-input"/>
-                </div>
-                <button type="submit" class="btn">Buscar</button>
-            </form>
-            <div v-if="state.errorMessage || state.skills.length > 0" class="skills">
-                <h2 class="skills-title">Habilidades</h2>
-                <div v-if="state.errorMessage" class="error-message">
-                    {{ state.errorMessage }}
-                </div>
-                <ul v-else>
-                    <li v-for="skill in state.skills" :key="skill.code" class="skill-item">
-                        <h3 class="skill-name">{{ skill.name }}</h3>
-                        <p><strong>Código:</strong> {{ skill.code }}</p>
-                        <p><strong>Items:</strong> {{ skill.items.join(', ') }}</p>
-                        <p><strong>Descripción:</strong> {{ skill.description }}</p>
-                    </li>
-                </ul>
+    <div class="flex justify-center items-center min-h-[calc(100vh-72px)]">
+        <UCard class="w-3/5 max-w-2xl">
+            <h1 class="text-2xl font-bold text-primary text-center mb-4">Buscar Habilidades</h1>
+            <UForm :state="state" class="space-y-4 text-center" @submit="handleSubmit">
+                <UFormGroup label="RUT" name="rut">
+                    <UInput v-model="state.rut" placeholder="20000002-3" />
+                </UFormGroup>
+                <UButton class="w-1/3 max-w-52 justify-center" type="submit" :loading="isLoading">
+                    Buscar
+                </UButton>
+            </UForm>
+            
+            <div class="mt-4">
+                <h2 class="text-xl font-bold text-primary text-center mb-2">Habilidades</h2>
+                <transition name="fade-scale" mode="out-in">
+                    <div v-if="showErrorCircle" key="error" class="flex items-center justify-center space-x-4">
+                        <div class="error-circle">
+                            <span class="text-white text-4xl font-bold">X</span>
+                        </div>
+                        <transition name="fade-slide">
+                            <p v-if="showErrorMessage" class="text-red-500 font-semibold">{{ errorMessage }}</p>
+                        </transition>
+                    </div>
+                    <transition-group v-else-if="skills.length > 0" name="list" tag="div">
+                        <UCard v-for="skill in skills" :key="skill.code" class="mb-4 skill-card">
+                            <h3 class="text-lg font-semibold">{{ skill.name }}</h3>
+                            <p><strong>Código:</strong> {{ skill.code }}</p>
+                            <p><strong>Items:</strong> {{ skill.items.join(', ') }}</p>
+                            <p><strong>Descripción:</strong> {{ skill.description }}</p>
+                        </UCard>
+                    </transition-group>
+                </transition>
             </div>
-        </div>
+        </UCard>
     </div>
 </template>
 
 <style scoped>
-.content-below-appbar {
-    height: calc(100vh - 72px);
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+    transition: all 0.5s ease;
+}
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.error-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #f56565;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #1a1a1a;
+    transition: all 0.5s ease;
 }
 
-.card {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    width: 100%;
+.skill-card {
+    transition: all 0.5s ease;
 }
 
-.title {
-    font-size: 2rem;
-    color: #22c55e;
-    text-align: center;
-    margin-bottom: 1rem;
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+    transition: all 0.5s ease;
 }
-
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-label {
-    font-size: 1rem;
-    color: #6b7280;
-    margin-bottom: 0.5rem;
-}
-
-.form-input {
-    padding: 0.5rem;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    font-size: 1rem;
-    color: #374151;
-    background-color: #f9fafb;
-    outline: none;
-    transition: border-color 0.3s ease;
-}
-
-.form-input:focus {
-    border-color: #2563eb;
-}
-
-.btn {
-    background-color: #2563eb;
-    color: #fff;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-    background-color: #1d4ed8;
-}
-
-.skills {
-    margin-top: 2rem;
-}
-
-.skills-title {
-    font-size: 1.5rem;
-    color: #22c55e;
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-.skill-item {
-    background: #111827; /* Dark background for better visibility */
-    padding: 1rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    color: #f9fafb; /* Light text color for dark background */
-}
-
-.skill-name {
-    font-size: 1.25rem;
-    color: #f9fafb; /* Light text color for dark background */
-    margin-bottom: 0.5rem;
-}
-
-.error-message {
-    color: red;
-    text-align: center;
-    margin-top: 1rem;
-    background: #fff5f5;
-    padding: 1rem;
-    border: 1px solid #f5c2c2;
-    border-radius: 4px;
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+    opacity: 0;
+    transform: translateX(-20px);
 }
 </style>
