@@ -17,7 +17,7 @@ const router = useRouter();
 function logout() {
     tokenCookie.value = undefined;
     user.$reset();
-    router.push('/getSkills');
+    router.push('/login');
 }
 
 function home() {

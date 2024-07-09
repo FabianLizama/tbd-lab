@@ -2,7 +2,6 @@ package com.Lab3.TdbLab3.models;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
 public class Volunteer {
 
     @Id
-    private ObjectId _id;
+    private ObjectId id;
     private String rut;
     private String fullname;
     private String birthday;
@@ -19,9 +18,15 @@ public class Volunteer {
     private Double latitude;
     private Double longitude;
     private String geom;
+    private List<Skill> skills;
 
-    @DBRef
-    private List<Skill> Skills;
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
 
     public String getRut() {
         return rut;
@@ -80,10 +85,10 @@ public class Volunteer {
     }
 
     public List<Skill> getSkills() {
-        return Skills;
+        return skills;
     }
 
     public void setSkills(List<Skill> skills) {
-        Skills = skills;
+        this.skills = skills;
     }
 }

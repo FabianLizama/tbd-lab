@@ -3,7 +3,7 @@ const user = userStore();
 const router = useRouter();
 const tokenCookie = useCookie('token');
 if (!tokenCookie.value) {
-    router.push('/getSkills');
+    router.push('/login');
 }
 if (user.type_user_id === 0) {
     router.push('/coordination');
